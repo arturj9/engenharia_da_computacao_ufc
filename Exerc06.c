@@ -56,7 +56,7 @@ void encaixa(int a,int b){
 	printf("\n\n");
 }
 void menor_segmento_outro(int a,int b){
-	int cpy_b = b, cpy_a = a, tam_b=0, tam_a=0, i, j, aux=0, inicial=-1;
+	int cpy_b=b, cpy_a=a, tam_b=0, tam_a=0, i, j, aux=0, inicial=-1, rest;
 	int maior_alg;
 	while(cpy_a!=0){
 		cpy_a = cpy_a/10;
@@ -69,18 +69,64 @@ void menor_segmento_outro(int a,int b){
 	int vet_a[tam_a], vet_b[tam_b];
 	cpy_b = b;
 	cpy_a = a;
-	for(i=0;i<tam_a;i++){
+	aux=0;
+	for(i=tam_a-1;i>=0;i--){ 
 		vet_a[aux++]=cpy_a/(pow(10,i));
+		rest = cpy_a/(pow(10,i));
+		cpy_a = cpy_a - rest*(pow(10,i));
 	}
 	aux=0;
-	for(i=0;i<tam_b;i++){
+	for(i=tam_b-1;i>=0;i--){ 
 		vet_b[aux++]=cpy_b/(pow(10,i));
+		rest = cpy_b/(pow(10,i));
+		cpy_b = cpy_b - rest*(pow(10,i));
 	}
-	aux=0;
 	if(a<b){
-		
+		int verif=0;
+		for(i=0;i<tam_b;i++){
+			aux=i;
+			for(j=0;j<tam_a;j++){
+				if(vet_b[aux]!=vet_a[j]){
+					j=tam_a-1;
+					aux++;
+					continue;
+				}
+				if((aux+1)%(tam_a)==0&&vet_b[aux]==vet_a[j]){
+					verif=1;
+					i=tam_b-1;
+					break;
+				}
+				aux++;
+			}
+		}
+		if(verif==0){
+			printf("%d não é segmento de %d.\n", a,b);
+		}else{
+			printf("%d é segmento de %d.\n", a,b);
+		}
 	}else if(b<a){
-	
+		int verif=0;
+		for(i=0;i<tam_a;i++){
+			aux=i;
+			for(j=0;j<tam_b;j++){
+				if(vet_a[aux]!=vet_b[j]){
+					j=tam_b-1;
+					aux++;
+					continue;
+				}
+				if((aux+1)%(tam_b)==0&&vet_a[aux]==vet_b[j]){
+					verif=1;
+					i=tam_a-1;
+					break;
+				}
+				aux++;
+			}
+		}
+		if(verif==0){
+			printf("%d não é segmento de %d.\n", b,a);
+		}else{
+			printf("%d é segmento de %d.\n", b,a);
+		}
 	}else{
 		if(a==b){
 			printf("%d é segmento de %d.\n", a,b);
