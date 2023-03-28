@@ -1,6 +1,6 @@
 package lista01;
 
-public class Item01 {
+public class Questao01 {
 
 	public static void main(String[] args) {
 //		1) Verifique se A é maior que 10, se verdade imprima: "A > 10" e verifique
