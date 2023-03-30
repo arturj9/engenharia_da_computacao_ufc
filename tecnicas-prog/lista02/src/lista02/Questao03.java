@@ -36,6 +36,8 @@ public class Questao03 {
 		}
 		
 		System.out.println("Parabéns, " + numeroInput + " é o número correto");
+		
+		scanner.close();
 
 	}
 

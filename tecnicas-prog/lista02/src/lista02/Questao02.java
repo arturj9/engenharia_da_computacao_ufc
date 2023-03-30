@@ -8,11 +8,11 @@ public class Questao02 {
 //		pare a leitura quando o usuário digitar um número negativo. Em seguida,
 //		o programa deve imprimir a soma dos números positivos lidos.
 		
-		Scanner scanner = new Scanner(System.in);
-		
 		int soma=0;
 		int indice=0;
 		int numero;
+		
+		Scanner scanner = new Scanner(System.in);
 		
 		while(true) {
 			
@@ -28,6 +28,8 @@ public class Questao02 {
 		}
 		
 		System.out.println("Soma dos números positivos: " + soma);
+		
+		scanner.close();
 		
 
 	}

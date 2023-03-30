@@ -21,6 +21,8 @@ public class Questao04 {
 			multiplicando++;
 			
 		}
+		
+		scanner.close();
 
 	}
 
