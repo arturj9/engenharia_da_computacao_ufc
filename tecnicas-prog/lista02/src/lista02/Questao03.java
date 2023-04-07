@@ -1,14 +1,8 @@
 package lista02;
-import java.util.Random;
+
 import java.util.Scanner;
 
 public class Questao03 {
-	
-	public static int gerarNumeroAleatorio1a100() {
-        Random rand = new Random();
-        int numeroAleatorio = rand.nextInt(100 - 1) + 1;
-        return numeroAleatorio;
-    }
 
 	public static void main(String[] args) {
 //		3) Escreva um programa que peça ao usuário para adivinhar um número
@@ -19,15 +13,18 @@ public class Questao03 {
 		
 		Scanner scanner = new Scanner(System.in);
 		
-		int numeroAleatorio = gerarNumeroAleatorio1a100();
+		int numeroAleatorio = 67;
 		int numeroInput;
 		
 		while(true) {
 			
-			System.out.print("Adivinhe o número: ");
+			System.out.print("Adivinhe o número entre 0 e 100: ");
 			numeroInput = scanner.nextInt();
 			
-			if(numeroInput==numeroAleatorio)
+			
+			if(numeroInput < 0 || numeroInput > 100)
+				System.out.println("O número informado está entre 0 e 100");
+			else if(numeroInput==numeroAleatorio)
 				break;
 			else if(numeroInput<numeroAleatorio)
 				System.out.println(numeroInput + " é menor que o número desconhecido");
