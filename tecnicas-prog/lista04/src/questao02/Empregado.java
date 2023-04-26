@@ -1,4 +1,4 @@
-package classes;
+package questao02;
 
 public class Empregado {
 //	2) A fim de representar empregados em uma firma, você deverá criar uma

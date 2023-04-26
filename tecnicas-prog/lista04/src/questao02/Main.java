@@ -1,8 +1,6 @@
-package respostas;
+package questao02;
 
-import classes.Empregado;
-
-public class Questao02 {
+public class Main {
 
 	public static void main(String[] args) {
 //		Crie duas instâncias da classe e exiba o salário anual de cada
