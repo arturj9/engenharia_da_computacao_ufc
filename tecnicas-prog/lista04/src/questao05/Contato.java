@@ -1,34 +1,6 @@
 package questao05;
 
 public class Contato {
-//	5) Um contato é constituído de código, nome da pessoa, endereço, e-mail,
-//	telefone e observação.
-//	a. Crie 4 construtores e atribua o valores por meio dos construtores. Os
-//	construtores devem receber os seguintes parâmetros:
-//
-//	I. Código.
-//	II. Código e nome.
-//	III. Código, nome e e-mail.
-//	IV. Telefone.
-//	b. O atributo e-mail não poderá ser modificado fora da classe contato, mas
-//	poderá ser acessado por outras classes.
-//	c. Faça um método para imprimir o código, nome, endereço, e-mail, telefone
-//	e observação dos contatos cadastrados.
-//	d. Faça um validador do código do contato. Um código válido é maior
-//	igual a 1000 e menor igual a 9999. Não permita que seja cadastrado
-//	um código inválido para nenhum contato.
-//	e. Faça um validador para o telefone. O telefone sempre deverá ter 8 dígitos.
-//	Não permita que seja cadastrado um telefone inválido para nenhum contato.
-//	f. Crie um método que possa duplicar um contato. Desta forma, um novo
-//	contato terá os mesmos dados do contato que for requerido a duplicação.
-//	g. Faça um método para verificar se o contato está totalmente preenchido.
-//	Ou seja, tenha valores diferentes do padrão para: código, nome, endereço, e-mail,
-//	telefone e observação.
-//	h. Crie uma classe agenda que é composta de uma lista de contatos, nome
-//	da agenda e uma descrição.
-//	i. Crie uma classe cliente que poderá usar uma agenda.
-//	j. Faça uma classe main para testar seu sistema criado.
-
 	private int codigo;
 	private String nome;
 	private String endereco;
@@ -37,50 +9,91 @@ public class Contato {
 	private String observacao;
 
 	public Contato(int codigo) {
-		this.codigo = codigo;
+		this.setCodigo(codigo);
 	}
 
 	public Contato(int codigo, String nome, String email) {
-		this.codigo = codigo;
-		this.nome = nome;
+		this.setCodigo(codigo);
+		this.setNome(nome);
 		this.email = email;
 	}
 	
 	public Contato(int codigo, String nome) {
-		this.codigo = codigo;
-		this.nome = nome;
+		this.setCodigo(codigo);
+		this.setNome(nome);
 	}
 	
 	public Contato(String telefone) {
-		this.telefone = telefone;
+		this.setTelefone(telefone);
 	}
 
-	public String getEmail() {
-		return email;
+	
+	public String getDados() {
+		return "Código: "+getCodigo()+"\nNome: "+getNome()+"\nEndereço: "+getEndereco()+"\nE-mail: "+getEmail()+"\nTelefone: "+getTelefone()+"\nObservação: "+getObservacao();
+	}
+	
+	public Contato duplicar() {
+		Contato c = new Contato(this.getCodigo(), this.getNome(), this.getEmail());
+		c.setEndereco(this.getEndereco());
+		c.setTelefone(this.getTelefone());
+		c.setObservacao(this.getObservacao());
+		return c;
+	}
+	
+	public boolean verificarPreenchidoTotal() {
+		if(this.getCodigo()==0||this.getNome()==null||this.getEndereco()==null
+				||this.getEmail()==null||this.getTelefone()==null||this.getObservacao()==null)
+			return false;
+		return true;
 	}
 
 	public int getCodigo() {
 		return codigo;
 	}
 
+	public void setCodigo(int codigo) {
+		if(codigo >= 1000 && codigo <= 9999)
+			this.codigo = codigo;
+	}
+
 	public String getNome() {
 		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getEndereco() {
 		return endereco;
 	}
 
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
 	public String getTelefone() {
 		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		if(telefone == null)
+			this.telefone = null;
+		
+		else if (telefone.length()==8)
+			this.telefone = telefone;
 	}
 
 	public String getObservacao() {
 		return observacao;
 	}
-	
-	public String getContato() {
-		return "Código: "+getCodigo()+"\nNome: "+getNome()+"\nEndereço: "+getEndereco()+"\nE-mail: "+getEmail()+"\nTelefone: "+getTelefone()+"\nObservação: "+getObservacao();
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
 	}
 	
 }

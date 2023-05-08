@@ -1,15 +1,6 @@
 package questao02;
 
 public class Empregado {
-//	2) A fim de representar empregados em uma firma, você deverá criar uma
-//	classe chamada Empregado. Esta classe deverá possuir as três informações
-//	a seguir:
-//	a. Um primeiro nome,
-//	b. Um sobrenome,
-//	c. Um salário mensal.
-//	Sua classe deve ter um construtor que inicializa os três atributos. Forneça um
-//	método set e get para cada atributo. Se o salário mensal não for positivo,
-//	configure-o como 0.0. 
 	
 	private String primeiroNome;
 	private String sobrenome;

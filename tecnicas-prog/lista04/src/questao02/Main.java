@@ -3,9 +3,6 @@ package questao02;
 public class Main {
 
 	public static void main(String[] args) {
-//		Crie duas instâncias da classe e exiba o salário anual de cada
-//		instância. Então dê a cada empregado um aumento de 10% e exiba novamente o
-//		salário anual de cada empregado.
 		
 		Empregado empregado1 = new Empregado("Artur", "Gomes", 10000);
 		Empregado empregado2 = new Empregado("Mateus", "Sousa", 12550.5);

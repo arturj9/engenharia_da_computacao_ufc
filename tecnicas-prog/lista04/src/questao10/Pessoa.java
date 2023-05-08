@@ -1,10 +1,9 @@
-package questao05;
+package questao10;
 
-public class Cliente {
+public abstract class Pessoa {
 	private String nome;
-	public Agenda agenda;
 
-	public Cliente(String nome) {
+	public Pessoa(String nome) {
 		super();
 		this.nome = nome;
 	}
@@ -15,10 +14,6 @@ public class Cliente {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public void setAgenda(Agenda agenda) {
-		this.agenda = agenda;
 	}
 	
 	
