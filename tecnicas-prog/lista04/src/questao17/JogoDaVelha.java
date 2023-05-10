@@ -1,33 +1,40 @@
 package questao17;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class JogoDaVelha {
 	private String[][] glade = new String[3][3];
-	private String[] possibilidades = {"*","X","O"};
+	private ArrayList<String> possibilidades;
+	private Jogador jogador1 = new Jogador("X");
+	private Jogador jogador2 = new Jogador("O");
 	
 	public JogoDaVelha() {
-		for(int i=0;i<3;i++) {
-			for(int j=0;j<3;j++)
-			glade[i][j]=this.getPossibilidades()[0];
-		}
+		String[][] gladeInicial = new String[3][3];
+		ArrayList<String> possibilidades = new ArrayList<String>(3);
+		
+		if(this.jogador1.getSimbolo()!=this.jogador2.getSimbolo()) {
 			
-	}
-
-	public String verGlade() {
-		String texto="";
-		for(int i=0;i<3;i++) {
-			for(int j=0;j<3;j++) {
-				texto+=glade[i][j]+" ";
-				if(j==2)
-					texto+="\n";
+			possibilidades.add(" ");
+			this.setPossibilidades(possibilidades);
+			possibilidades.add(this.jogador1.getSimbolo());
+			possibilidades.add(this.jogador2.getSimbolo());
+			
+			for(int i=0;i<this.gladeTamanho();i++) {
+				for(int j=0;j<this.gladeTamanho();j++)
+				gladeInicial[i][j]=this.possibilidades.get(0);
 			}
+			this.setGlade(gladeInicial);
+			this.setPossibilidades(possibilidades);
 		}
-		return texto;
 	}
 
-	public String[] getPossibilidades() {
+	public ArrayList<String> getPossibilidades() {
 		return possibilidades;
+	}
+	
+	public void setPossibilidades(ArrayList<String> possibilidades) {
+		this.possibilidades = possibilidades;
 	}
 	
 	public String[][] getGlade() {
@@ -38,94 +45,116 @@ public class JogoDaVelha {
 		this.glade = glade;
 	}
 	
-	public boolean jogada(int possibilidadePosicao, int x, int y) {
-		x--;
-		y--;
-		String[][] novaGlade = this.getGlade();
-		if(this.getGlade()[x][y]==this.getPossibilidades()[0]) {
-			novaGlade[x][y]=this.getPossibilidades()[possibilidadePosicao];
-			this.setGlade(novaGlade);
+	public String verGlade() {
+		String texto="";
+		for(int i=0;i<this.gladeTamanho();i++) {
+			for(int j=0;j<this.gladeTamanho();j++) {
+				texto+=glade[i][j];
+				if(j!=this.gladeTamanho()-1)
+					texto+=" | ";
+				else
+					texto+="\n";
+			}
+			if(i!=this.gladeTamanho()-1)
+				texto+="---------\n";
+		}
+		return texto;
+	}
+	
+	public int gladeTamanho() {
+		return this.glade.length;
+	}
+	
+ 	public boolean jogada(Jogador jogador, int linha, int coluna) {
+ 		if(linha<0||linha>this.gladeTamanho()-1||coluna<0||coluna>this.glade[0].length)
+ 			return false;
+ 		else if(this.getGlade()[linha][coluna].equals(this.getPossibilidades().get(0))) {
+			this.getGlade()[linha][coluna]=jogador.getSimbolo();
 			return true;
 		}
 		else
-			return false;
-			
+			return false;	
 	}
 	
-	public boolean vezJogador1(int x, int y) {
-		return jogada(1,x,y);
+	public Jogador getJogador1() {
+		return jogador1;
 	}
-	
-	public boolean vezJogador2(int x, int y) {
-		return jogada(2,x,y);
+
+	public Jogador getJogador2() {
+		return jogador2;
 	}
 	
 	public boolean verificaEmpate() {
 		for(int i=0;i<3;i++) {
 			for(int j=0;j<3;j++) {
-				if(this.getGlade()[i][j]==this.getPossibilidades()[0])
+				if(this.getGlade()[i][j]==this.getPossibilidades().get(0))
 					return false;
 			}
 		}
 		return true;
 	}
 	
-	public boolean verificaVitoriaLinha(int possibilidadePosicao, int x) {
-		x--;
-		for(int i=0;i<3;i++) {
-			if(this.getGlade()[x][i]!=this.getPossibilidades()[possibilidadePosicao])
+	public boolean verificaVitoriaLinha(String simbolo, int linha) {
+		for(int j=0;j<this.gladeTamanho();j++) {
+			if(!(this.getGlade()[linha][j].equals(simbolo)))
 				return false;
 		}
 		return true;
 	}
 	
-	public boolean verificaVitoriaColuna(int possibilidadePosicao, int y) {
-		y--;
-		for(int i=0;i<3;i++) {
-			if(this.getGlade()[i][y]!=this.getPossibilidades()[possibilidadePosicao])
+	public boolean verificaVitoriaColuna(String simbolo, int coluna) {
+		for(int i=0;i<this.gladeTamanho();i++) {
+			if(!(this.getGlade()[i][coluna].equals(simbolo)))
 				return false;
 		}
 		return true;
 	}
 	
-	public boolean verificaVitoriaDiagonalPrincipal(int possibilidadePosicao) {
-		for(int i=0;i<3;i++) {
-			if(this.getGlade()[i][i]!=this.getPossibilidades()[possibilidadePosicao])
+	public boolean verificaVitoriaDiagonalPrincipal(String simbolo) {
+		for(int i=0;i<this.gladeTamanho();i++) {
+			if(!(this.getGlade()[i][i].equals(simbolo)))
 				return false;
 		}
 		return true;
 	}
 	
-	public boolean verificaVitoriaDiagonalSecundaria(int possibilidadePosicao) {
-		int cont=2;
-		for(int i=0;i<3;i++) {
-			if(this.getGlade()[i][cont--]!=this.getPossibilidades()[possibilidadePosicao])
+	public boolean verificaVitoriaDiagonalSecundaria(String simbolo) {
+		int cont=(this.gladeTamanho()/2)+1;
+		for(int i=0;i<this.gladeTamanho();i++) {
+			if(!(this.getGlade()[i][cont--].equals(simbolo)))
 				return false;
 		}
 		return true;
 	}
 	
-	public boolean verificarVitoria(int possibilidadePosicao, int x, int y) {
-		if(this.verificaVitoriaLinha(possibilidadePosicao, x)||this.verificaVitoriaColuna(possibilidadePosicao, y)
-				||this.verificaVitoriaDiagonalPrincipal(possibilidadePosicao)
-				||this.verificaVitoriaDiagonalSecundaria(possibilidadePosicao))
+	public boolean verificarVitoria(Jogador jogador, int linha, int coluna) {
+		String simbolo = jogador.getSimbolo();
+		if(this.verificaVitoriaLinha(simbolo, linha)
+				||this.verificaVitoriaColuna(simbolo, coluna)
+				||this.verificaVitoriaDiagonalPrincipal(simbolo)
+				||this.verificaVitoriaDiagonalSecundaria(simbolo))
 			return true;
 		return false;
 	}
 	
 	public void jogar() {
-		int x=0;
-		int y=0;
+		int linha=0;
+		int coluna=0;
 		Scanner scanner = new Scanner(System.in);
+		
 		System.out.println("\n"+this.verGlade());
+		
 		while(true) {
+			
 			while(true) {
+				
 				System.out.println("Jogador 1");
 				System.out.print("Linha: ");
-				x=scanner.nextInt();
+				linha=scanner.nextInt();
 				System.out.print("Coluna: ");
-				y=scanner.nextInt();
-				if(this.vezJogador1(x, y))
+				coluna=scanner.nextInt();
+				
+				if(this.jogada(this.getJogador1(), linha-1, coluna-1))
 					break;
 				else
 					System.out.println("\nMovimento inválido, tente novamente");
@@ -134,21 +163,23 @@ public class JogoDaVelha {
 			
 			System.out.println("\n"+this.verGlade());
 			
-			if(verificaEmpate()) {
-				System.out.println("\nEmpate");
+			if(this.verificarVitoria(this.getJogador1(), linha-1, coluna-1)) {
+				System.out.println("Jogador 2 foi derrotado");
 				break;
-			}else if(this.verificarVitoria(1, x, y)) {
-				System.out.println("\nJogador 2 foi derrotado");
+			}else if(verificaEmpate()) {
+				System.out.println("Empate");
 				break;
 			}
 			
 			while(true) {
+				
 				System.out.println("Jogador 2");
 				System.out.print("Linha: ");
-				x=scanner.nextInt();
+				linha=scanner.nextInt();
 				System.out.print("Coluna: ");
-				y=scanner.nextInt();
-				if(this.vezJogador2(x, y))
+				coluna=scanner.nextInt();
+				
+				if(this.jogada(jogador2, linha-1, coluna-1))
 					break;
 				else
 					System.out.println("\nMovimento inválido, tente novamente");
@@ -157,13 +188,17 @@ public class JogoDaVelha {
 			
 			System.out.println("\n"+this.verGlade());
 			
-			if(verificaEmpate()) {
-				System.out.println("\nEmpate");
+			if(this.verificarVitoria(this.getJogador2(), linha-1, coluna-1)) {
+				System.out.println("Jogador 1 foi derrotado");
 				break;
-			}else if(this.verificarVitoria(2, x, y)) {
-				System.out.println("\nJogador 1 foi derrotado");
+			}else if(verificaEmpate()) {
+				System.out.println("Empate");
 				break;
 			}
 		}
+		
+		
+		scanner.close();
 	}
+
 }
