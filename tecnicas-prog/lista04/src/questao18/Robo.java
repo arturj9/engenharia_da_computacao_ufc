@@ -21,7 +21,7 @@ public class Robo {
 		this.mapa.getArea().get(posicao).setRobo(null);
 		int linha = mapa.getArea().get(posicao).getLinha() - 1;
 		int coluna = mapa.getArea().get(posicao).getColuna();
-		this.caminhar(linha,coluna);
+		this.caminhar(linha, coluna);
 		this.setCaminhouNorte();
 	}
 
@@ -30,7 +30,7 @@ public class Robo {
 		this.mapa.getArea().get(posicao).setRobo(null);
 		int linha = mapa.getArea().get(posicao).getLinha() + 1;
 		int coluna = mapa.getArea().get(posicao).getColuna();
-		this.caminhar(linha,coluna);
+		this.caminhar(linha, coluna);
 		this.setCaminhouSul();
 	}
 
@@ -38,8 +38,8 @@ public class Robo {
 		int posicao = this.mapa.getPosicaoRobo();
 		this.mapa.getArea().get(posicao).setRobo(null);
 		int linha = mapa.getArea().get(posicao).getLinha();
-		int coluna = mapa.getArea().get(posicao).getColuna()+1;
-		this.caminhar(linha,coluna);
+		int coluna = mapa.getArea().get(posicao).getColuna() + 1;
+		this.caminhar(linha, coluna);
 		this.setCaminhouLeste();
 	}
 
@@ -47,17 +47,17 @@ public class Robo {
 		int posicao = this.mapa.getPosicaoRobo();
 		this.mapa.getArea().get(posicao).setRobo(null);
 		int linha = mapa.getArea().get(posicao).getLinha();
-		int coluna = mapa.getArea().get(posicao).getColuna()-1;
-		this.caminhar(linha,coluna);
+		int coluna = mapa.getArea().get(posicao).getColuna() - 1;
+		this.caminhar(linha, coluna);
 		this.setCaminhouOeste();
 	}
 
 	public void caminharNordeste() {
 		int posicao = this.mapa.getPosicaoRobo();
 		this.mapa.getArea().get(posicao).setRobo(null);
-		int linha = mapa.getArea().get(posicao).getLinha()-1;
-		int coluna = mapa.getArea().get(posicao).getColuna()+1;
-		this.caminhar(linha,coluna);
+		int linha = mapa.getArea().get(posicao).getLinha() - 1;
+		int coluna = mapa.getArea().get(posicao).getColuna() + 1;
+		this.caminhar(linha, coluna);
 		this.setCaminhouNordeste();
 
 	}
@@ -65,133 +65,139 @@ public class Robo {
 	public void caminharSudeste() {
 		int posicao = this.mapa.getPosicaoRobo();
 		this.mapa.getArea().get(posicao).setRobo(null);
-		int linha = mapa.getArea().get(posicao).getLinha()+1;
-		int coluna = mapa.getArea().get(posicao).getColuna()+1;
-		this.caminhar(linha,coluna);
+		int linha = mapa.getArea().get(posicao).getLinha() + 1;
+		int coluna = mapa.getArea().get(posicao).getColuna() + 1;
+		this.caminhar(linha, coluna);
 		this.setCaminhouSudeste();
 	}
 
 	public void caminharSudoeste() {
 		int posicao = this.mapa.getPosicaoRobo();
 		this.mapa.getArea().get(posicao).setRobo(null);
-		int linha = mapa.getArea().get(posicao).getLinha()+1;
-		int coluna = mapa.getArea().get(posicao).getColuna()-1;
-		this.caminhar(linha,coluna);
+		int linha = mapa.getArea().get(posicao).getLinha() + 1;
+		int coluna = mapa.getArea().get(posicao).getColuna() - 1;
+		this.caminhar(linha, coluna);
 		this.setCaminhouSudoeste();
 	}
 
 	public void caminharNoroeste() {
 		int posicao = this.mapa.getPosicaoRobo();
 		this.mapa.getArea().get(posicao).setRobo(null);
-		int linha = mapa.getArea().get(posicao).getLinha()-1;
-		int coluna = mapa.getArea().get(posicao).getColuna()-1;
-		this.caminhar(linha,coluna);
+		int linha = mapa.getArea().get(posicao).getLinha() - 1;
+		int coluna = mapa.getArea().get(posicao).getColuna() - 1;
+		this.caminhar(linha, coluna);
 		this.setCaminhouNoroeste();
 	}
-	
+
 	public void caminhar(int linha, int coluna) {
 		for (Coordenada coordenada : mapa.getArea()) {
 			if (coordenada.getLinha() == linha && coordenada.getColuna() == coluna) {
 				coordenada.setRobo(this);
-				if(!coordenada.isJaVisitada())
+				if (!coordenada.isJaVisitada())
 					coordenada.setJaVisitada(true);
 			}
 		}
 	}
-	
+
 	public int quantPosicaoPassada() {
-		int quant=0;
+		int quant = 0;
 		for (Coordenada coordenada : mapa.getArea()) {
-			if(coordenada.isJaVisitada())
+			if (coordenada.isJaVisitada())
 				quant++;
 		}
 		return quant;
 	}
-	
+
 	public int quantNaoPosicaoPassada() {
-		int quant=0;
+		int quant = 0;
 		for (Coordenada coordenada : mapa.getArea()) {
-			if(!coordenada.isJaVisitada())
+			if (!coordenada.isJaVisitada())
 				quant++;
 		}
 		return quant;
 	}
-	
+
 	public void caminhadaA() {
 		int posicao = this.mapa.getPosicaoRobo();
 		this.mapa.getArea().get(posicao).setRobo(null);
 		Coordenada coordenada = this.mapa.getArea().get(0);
 		coordenada.setRobo(this);
-		if(!coordenada.isJaVisitada())
+		if (!coordenada.isJaVisitada())
 			coordenada.setJaVisitada(true);
-		posicao=0;
-		for (int i=0;i<this.mapa.getArea().size()-1;i++) {
-			if(this.mapa.getArea().get(i+1).getLinha()!=posicao) {
+		posicao = 0;
+		for (int i = 0; i < this.mapa.getArea().size() - 1; i++) {
+			if (this.mapa.getArea().get(i + 1).getLinha() != posicao) {
 				this.caminharSul();
 				i++;
 				posicao++;
 			}
-			if(posicao%2==0) {
+			if (posicao % 2 == 0) {
 				this.caminharLeste();
-			}else{
+			} else {
 				this.caminharOeste();
 			}
-			
+
 		}
 	}
-	
+
 	public void caminhadaB() {
 		int posicao = this.mapa.getPosicaoRobo();
 		this.mapa.getArea().get(posicao).setRobo(null);
 		Coordenada coordenada = this.mapa.getArea().get(0);
 		coordenada.setRobo(this);
-		if(!coordenada.isJaVisitada())
+		if (!coordenada.isJaVisitada())
 			coordenada.setJaVisitada(true);
-		int tamanhoLinhas = this.mapa.getTamanhoLinhas()-1;
-		for(int i=0;i<tamanhoLinhas;i++) {
+		int tamanhoLinhas = this.mapa.getTamanhoLinhas() - 1;
+		for (int i = 0; i < tamanhoLinhas; i++) {
 			this.caminharSudeste();
 		}
-		for(int i=0;i<tamanhoLinhas;i++) {
+		for (int i = 0; i < tamanhoLinhas; i++) {
 			this.caminharNorte();
 		}
-		for(int i=0;i<tamanhoLinhas;i++) {
+		for (int i = 0; i < tamanhoLinhas; i++) {
 			this.caminharSudoeste();
 		}
-		for(int i=0;i<tamanhoLinhas-1;i++) {
+		for (int i = 0; i < tamanhoLinhas - 1; i++) {
 			this.caminharNorte();
 		}
-		
+
 	}
-	
+
 	public void caminhadaC() {
-		int posicao=1;
-		boolean finnal=false;
-		for (int i=0;i<this.mapa.getTamanhoLinhas();i++) {
-			if(posicao%2!=0||finnal) {
+		int posicao = 1;
+		boolean finnal = false;
+		for (int i = 0; i < this.mapa.getTamanhoLinhas(); i++) {
+			if (posicao % 2 != 0 || finnal) {
 				for (int j = 0; j < posicao; j++) {
 					this.caminharLeste();
 				}
 				for (int j = 0; j < posicao; j++) {
 					this.caminharSul();
 				}
-				if(posicao!=this.mapa.getTamanhoLinhas()-1)
+				if (posicao != this.mapa.getTamanhoLinhas() - 1)
 					posicao++;
 				else
-					finnal=true;
-			}else{
+					finnal = true;
+			} else {
 				for (int j = 0; j < posicao; j++) {
 					this.caminharOeste();
 				}
 				for (int j = 0; j < posicao; j++) {
 					this.caminharNorte();
 				}
-				if(posicao!=this.mapa.getTamanhoLinhas()-1)
+				if (posicao != this.mapa.getTamanhoLinhas() - 1)
 					posicao++;
 				else
-					finnal=true;
+					finnal = true;
 			}
-			
+
 		}
+	}
+
+	public String quantDirecoes() {
+		return "\nQuantidade caminhada pelo Robô\n" + "Norte:" + caminhouNorte + ", Sul:" + caminhouSul + ", Leste:"
+				+ caminhouLeste + ", Oeste:" + caminhouOeste + ", Nordeste:" + caminhouNordeste + ", Sudeste:"
+				+ caminhouSudeste + ", Sudoeste:" + caminhouSudoeste + ", Noroeste:" + caminhouNoroeste;
 	}
 
 	public int getCaminhouNorte() {
@@ -273,15 +279,5 @@ public class Robo {
 	public void setSimbolo(String simbolo) {
 		this.simbolo = simbolo;
 	}
-
-	public String quantDirecoes() {
-		return "\nQuantidade caminhada pelo Robô\n"+ "Norte:" + caminhouNorte + ", Sul:" + caminhouSul + ", Leste:"
-				+ caminhouLeste + ", Oeste:" + caminhouOeste + ", Nordeste:" + caminhouNordeste
-				+ ", Sudeste:" + caminhouSudeste + ", Sudoeste:" + caminhouSudoeste
-				+ ", Noroeste:" + caminhouNoroeste;
-	}
-	
-	
-	
 
 }
