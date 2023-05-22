@@ -1,7 +1,6 @@
 package controlador;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
 public class Biblioteca {
@@ -16,11 +15,12 @@ public class Biblioteca {
 	public String fazerEmprestimo(Cliente c, Publicacao p) {
 		if (this.getEmprestimosDeCliente(c).size() < c.verificarPublicacaos()) {
 			if (p.getQuantidadeDisponivel() > 0) {
-				Emprestimo e = new Emprestimo(c, p);
-				listaEmprestimo.add(e);
-				p.setQuantidadeDisponivel(p.getQuantidadeDisponivel() - 1);
-				return "Empréstimo feito com sucesso, tempo limite com a publicação: " + c.verificarDias() + " dias";
-
+				if(c.tps==0||c.tps/50!=0) {
+					Emprestimo e = new Emprestimo(c, p);
+					listaEmprestimo.add(e);
+					p.setQuantidadeDisponivel(p.getQuantidadeDisponivel() - 1);
+					return "Empréstimo feito com sucesso, tempo limite com a publicação: " + c.verificarDias() + " dias";
+				}
 			} else {
 				return "Essa publicação não está mais disponivel";
 			}

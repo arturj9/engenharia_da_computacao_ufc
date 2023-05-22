@@ -11,7 +11,7 @@ public class Terminal {
 	
 	public String entradaNome() {
 		Scanner entrada = new Scanner (System.in);
-		System.out.println("Qual é o seu nome?");
+		System.out.println("Qual ï¿½ o seu nome?");
 		String nome= entrada.next();
 		return nome;
 	}
