@@ -6,13 +6,19 @@ public class Torre extends Robo{
 		super(id, nome, posicaox, posicaoy, plano, identificador);
 	}
 
-	public void avancar(int numero) {
-		if(numero>0&&numero<=2)
-			this.movimentar(getPosicaox()+numero, getPosicaoy());
+	public boolean avancar(int numero) {
+		if(numero>0&&numero<=2) {
+			if(this.movimentar(getPosicaox()+numero, getPosicaoy()))
+				return true;
+		}
+		return false;
 	}
 
-	public void retroceder(int numero) {
-		if(numero>0&&numero<=2)
-			this.movimentar(getPosicaox()-numero, getPosicaoy());
+	public boolean retroceder(int numero) {
+		if(numero>0&&numero<=2) {
+			if(this.movimentar(getPosicaox()-numero, getPosicaoy()))
+				return true;
+		}
+		return false;
 	}
 }

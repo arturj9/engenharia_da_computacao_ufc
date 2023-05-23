@@ -6,13 +6,19 @@ public class Cavalo extends Robo{
 		super(id, nome, posicaox, posicaoy, plano, identificador);
 	}
 
-	public void avancar(int numero) {
-		if(numero>0&&numero<=2)
-			this.movimentar(getPosicaox()+numero, getPosicaoy()+numero);
+	public boolean avancar(int numero) {
+		if(numero>0&&numero<=2) {
+			if(this.movimentar(getPosicaox()+numero, getPosicaoy()+numero))
+				return true;
+		}
+		return false;
 	}
 
-	public void retroceder(int numero) {
-		if(numero>0&&numero<=2)
-			this.movimentar(getPosicaox()-numero, getPosicaoy()-numero);
+	public boolean retroceder(int numero) {
+		if(numero>0&&numero<=2) {
+			if(this.movimentar(getPosicaox()-numero, getPosicaoy()-numero))
+				return true;
+		}
+		return false;
 	}
 }

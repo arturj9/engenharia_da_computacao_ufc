@@ -3,7 +3,7 @@ package apresentacao;
 import java.util.Scanner;
 
 public class Terminal {
-	private Scanner entrada;
+	public Scanner entrada;
 	
 	public Terminal() {
 		entrada = new Scanner (System.in);

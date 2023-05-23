@@ -126,9 +126,9 @@ public class Celula {
 		if (verificaListaRobos())
 			setSimbolo(listaRobos.get(0).getIdentificador());
 		else if (verificaAluno() && visitado)
-			setSimbolo(aluno.getSimbolo());
+			setSimbolo(aluno.getIdentificador());
 		else if (verificaBug() && visitado)
-			setSimbolo(bug.getSimbolo());
+			setSimbolo(bug.getIdentificador());
 		else if (visitado)
 			setSimbolo("@");
 	}

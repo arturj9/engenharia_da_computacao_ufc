@@ -6,12 +6,16 @@ public class Andador extends Robo{
 		super(id, nome, posicaox, posicaoy, plano, identificador);
 	}
 
-	public void avancar(int numero) {
-		this.movimentar(getPosicaox()+numero, getPosicaoy());
+	public boolean avancar(int numero) {
+		if(this.movimentar(getPosicaox()+numero, getPosicaoy()))
+			return true;
+		return false;
 	}
 
-	public void retroceder(int numero) {
-		this.movimentar(getPosicaox()-numero, getPosicaoy());
+	public boolean retroceder(int numero) {
+		if(this.movimentar(getPosicaox()-numero, getPosicaoy()))
+				return true;
+		return false;
 	}
 	
 }

@@ -6,13 +6,19 @@ public class Peao extends Robo {
 		super(id, nome, posicaox, posicaoy, plano, identificador);
 	}
 
-	public void avancar(int numero) {
-		if(numero==1)
-			this.movimentar(getPosicaox(), getPosicaoy()+1);
+	public boolean avancar(int numero) {
+		if(numero==1) {
+			if(this.movimentar(getPosicaox(), getPosicaoy()+1))
+				return true;
+		}
+		return false;
 	}
 
-	public void retroceder(int numero) {
-		if(numero==1)
-			this.movimentar(getPosicaox(), getPosicaoy()-1);
+	public boolean retroceder(int numero) {
+		if(numero==1) {
+			if(this.movimentar(getPosicaox(), getPosicaoy()-1))
+				return true;
+		}
+		return false;
 	}
 }

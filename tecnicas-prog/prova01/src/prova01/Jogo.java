@@ -15,20 +15,42 @@ public class Jogo {
 
 	public Jogo() {
 		this.setTerminal(new Terminal());
-		iniciar();
-		iniciarRobos();
+		this.setRobos(new ArrayList<Robo>());
+		this.setAlunos(new ArrayList<Aluno>());
+		this.setBugs(new ArrayList<Bug>());
 		setJogando(true);
+	}
+
+	public void iniciar() {
+		setJogador(new Jogador(terminal.entradaString("Informe seu nome: ")));
+		terminal.mensagem("Informe as quantidades de");
+		setPlano(new Plano(new Inteiro("Linhas: ").getNumero(), solicitarInteiro("Colunas: ")));
 		povoarPlano();
-		mostrarPlano();
 		rodada();
-		relatorioFinal();
+	}
+	
+	public int solicitarInteiro(String msg) {
+		try {
+			return terminal.entradaInteiro(msg);
+		}catch (Exception e) {
+			return solicitarInteiro(msg);
+		}
+	}
+
+	public void mostrarPlano() {
+		terminal.mensagem(plano.show());
+	}
+
+	public void povoarPlano() {
+		iniciarRobos();
+		iniciarAlunos();
+		iniciarBugs();
 	}
 
 	public void iniciarRobos() {
 		int contador = 1;
 		int xInicial = 1;
 		int yInicial = 1;
-		robos = new ArrayList<Robo>();
 		this.robos.add(new Andador(contador++, "Andador", xInicial, yInicial, plano, "A"));
 		this.robos.add(new Peao(contador++, "Peao", xInicial, yInicial, plano, "P"));
 		this.robos.add(new Torre(contador++, "Torre", xInicial, yInicial, plano, "T"));
@@ -40,12 +62,11 @@ public class Jogo {
 
 	public void iniciarAlunos() {
 		int quant;
+		Celula celula;
+		Aluno aluno;
 		do {
 			quant = terminal.entradaInteiro("Informe as quantidades de alunos: ");
 		} while (!(quant < ((this.plano.getTamanhoX() * this.plano.getTamanhoY()) / 2)));
-		this.setAlunos(new ArrayList<Aluno>());
-		Celula celula;
-		Aluno aluno;
 		for (int i = 1; i <= quant; i++) {
 			celula = plano.sortearCelula();
 			aluno = new Aluno("Aluno " + i, celula.getPosicaoX(), celula.getPosicaoY());
@@ -59,7 +80,6 @@ public class Jogo {
 		do {
 			quant = terminal.entradaInteiro("Informe as quantidades de bugs: ");
 		} while (!(quant < ((this.plano.getTamanhoX() * this.plano.getTamanhoY()) / 2)));
-		this.setBugs(new ArrayList<Bug>());
 		Celula celula;
 		Bug bug;
 		for (int i = 1; i <= quant; i++) {
@@ -70,23 +90,16 @@ public class Jogo {
 		}
 	}
 
-	public void iniciar() {
-		setJogador(new Jogador(terminal.entradaString("Informe seu nome: ")));
-		terminal.mensagem("Informe as quantidades de");
-		setPlano(new Plano(terminal.entradaInteiro("Linhas: "), terminal.entradaInteiro("Colunas: ")));
-	}
-
 	public void rodada() {
 		for (Robo robo : robos) {
-			if(!jogando)
+			if (!jogando)
 				return;
+			mostrarPlano();
 			vez(robo);
 		}
-		calcularPotuacaoCelulas();
 		relatorioRodada();
-		if(verificarAlunosSalvos())
+		if (verificarAlunosSalvos())
 			fimDeJogo();
-		mostrarPlano();
 		rodada();
 	}
 
@@ -97,81 +110,81 @@ public class Jogo {
 			fimDeJogo();
 		}
 		int numero = terminal.entradaInteiro("Informe a quantidade de casas que deseja andar: ");
-		if (decisao == 1)
-			robo.avancar(numero);
-		else if (decisao == 0)
-			robo.retroceder(numero);
-		mostrarPlano();
+		if (decisao == 1) {
+			if(!robo.avancar(numero)) {
+				terminal.mensagem("Entrada inválida, tente novamente");
+				vez(robo);
+			}
+		}
+		else if (decisao == 0) {
+			if(!robo.retroceder(numero)) {
+				terminal.mensagem("Entrada inválida, tente novamente");
+				vez(robo);
+			}
+		}
 	}
 
 	public void fimDeJogo() {
+		relatorioFinal();
 		this.setJogando(false);
 	}
 
 	public void relatorioFinal() {
 		String texto = "Relatorio";
 		for (Robo robo : robos) {
-			texto+="\n\n\n";
-			if(verificarVencedor(robo))
-				texto+=jogador.getNome()+" - ";
-			texto+=robo.imprimir();
-		}
-		terminal.mensagem(texto);
-	}
-	
-	public void relatorioRodada() {
-		String texto = "Total de alunos salvos: "+this.getAlunosSalvos()+"\nTotal de bugs ocorridos: "
-				+this.getBugsEncontrados()+"\n\nPontuacao";
-		for (Robo robo : robos) {
-			texto+="\n"+robo.infoPontos();
+			texto += "\n\n\n";
+			if (verificarVencedor(robo))
+				texto += jogador.getNome() + " - ";
+			texto += robo.imprimir();
 		}
 		terminal.mensagem(texto);
 	}
 
-	public void povoarPlano() {
-		iniciarAlunos();
-		iniciarBugs();
+	public void relatorioRodada() {
+		calcularPotuacaoCelulas();
+		String texto = "Total de alunos salvos: " + this.getAlunosSalvos() + "\nTotal de bugs ocorridos: "
+				+ this.getBugsEncontrados() + "\n\nPontuacao";
+		for (Robo robo : robos) {
+			texto += "\n" + robo.infoPontos();
+		}
+		terminal.mensagem(texto);
 	}
-	
+
 	public void calcularPotuacaoCelulas() {
 		for (Celula celula : plano.getListaCelulas()) {
 			celula.calcularPontuacaoRobos();
 		}
 	}
 
-	public void mostrarPlano() {
-		terminal.mensagem(plano.show());
-	}
-	
 	public boolean verificarVencedor(Robo roboE) {
 		for (Robo robo : robos) {
-			if(roboE.getPontuacao()<robo.getPontuacao())
+			if (roboE.getPontuacao() < robo.getPontuacao())
 				return false;
 		}
 		return true;
 	}
-	
+
 	public int getAlunosSalvos() {
-		int quant=0;
+		int quant = 0;
 		for (Aluno aluno : alunos) {
-			if(aluno.isEncontrado())
+			if (aluno.isEncontrado())
 				quant++;
 		}
 		return quant;
 	}
-	
+
 	public int getBugsEncontrados() {
-		int quant=0;
+		int quant = 0;
 		for (Bug bug : bugs) {
-			if(bug.isEncontrado())
+			if (bug.isEncontrado())
 				quant++;
 		}
 		return quant;
 	}
-	
+
 	public boolean verificarAlunosSalvos() {
 		for (Aluno aluno : alunos) {
-			if(!aluno.isEncontrado())
+			if (!aluno.isEncontrado())
 				return false;
 		}
 		return true;
@@ -223,6 +236,14 @@ public class Jogo {
 
 	public void setBugs(ArrayList<Bug> bugs) {
 		this.bugs = bugs;
+	}
+
+	public ArrayList<Robo> getRobos() {
+		return robos;
+	}
+
+	public void setRobos(ArrayList<Robo> robos) {
+		this.robos = robos;
 	}
 
 }
