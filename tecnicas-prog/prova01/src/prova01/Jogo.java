@@ -24,17 +24,9 @@ public class Jogo {
 	public void iniciar() {
 		setJogador(new Jogador(terminal.entradaString("Informe seu nome: ")));
 		terminal.mensagem("Informe as quantidades de");
-		setPlano(new Plano(new Inteiro("Linhas: ").getNumero(), solicitarInteiro("Colunas: ")));
+		setPlano(new Plano(terminal.entradaInteiro("Linhas: "), terminal.entradaInteiro("Colunas: ")));
 		povoarPlano();
 		rodada();
-	}
-	
-	public int solicitarInteiro(String msg) {
-		try {
-			return terminal.entradaInteiro(msg);
-		}catch (Exception e) {
-			return solicitarInteiro(msg);
-		}
 	}
 
 	public void mostrarPlano() {
@@ -77,11 +69,11 @@ public class Jogo {
 
 	public void iniciarBugs() {
 		int quant;
+		Celula celula;
+		Bug bug;
 		do {
 			quant = terminal.entradaInteiro("Informe as quantidades de bugs: ");
 		} while (!(quant < ((this.plano.getTamanhoX() * this.plano.getTamanhoY()) / 2)));
-		Celula celula;
-		Bug bug;
 		for (int i = 1; i <= quant; i++) {
 			celula = plano.sortearCelula();
 			bug = new Bug("Bug " + i, celula.getPosicaoX(), celula.getPosicaoY());
@@ -103,7 +95,7 @@ public class Jogo {
 		rodada();
 	}
 
-	private void vez(Robo robo) {
+	public void vez(Robo robo) {
 		terminal.mensagem("Vez do robô " + robo.getNome());
 		int decisao = terminal.entradaInteiro("Digite 1 para avancar ou 0 para retroceder ou 3 para sair: ");
 		if (decisao == 3) {
@@ -111,16 +103,28 @@ public class Jogo {
 		}
 		int numero = terminal.entradaInteiro("Informe a quantidade de casas que deseja andar: ");
 		if (decisao == 1) {
-			if(!robo.avancar(numero)) {
-				terminal.mensagem("Entrada inválida, tente novamente");
-				vez(robo);
-			}
+			tentarAvancar(robo, numero);
+		} else if (decisao == 0) {
+			tentarRetroceder(robo, numero);
+		} else {
+			tentarNovamente(robo);
 		}
-		else if (decisao == 0) {
-			if(!robo.retroceder(numero)) {
-				terminal.mensagem("Entrada inválida, tente novamente");
-				vez(robo);
-			}
+	}
+
+	public void tentarNovamente(Robo robo) {
+		terminal.mensagem("Entrada inválida, tente novamente");
+		vez(robo);
+	}
+
+	public void tentarAvancar(Robo robo, int numero) {
+		if (!robo.avancar(numero)) {
+			tentarNovamente(robo);
+		}
+	}
+
+	public void tentarRetroceder(Robo robo, int numero) {
+		if (!robo.retroceder(numero)) {
+			tentarNovamente(robo);
 		}
 	}
 

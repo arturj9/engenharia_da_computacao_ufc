@@ -10,7 +10,7 @@ public class Terminal {
 	}
 	
 	public void mensagem(String msg) {
-		System.out.println("\n"+msg+"\n");	
+		System.out.print("\n"+msg+"\n");	
 	}
 	
 	public String entradaString(String msg) {
@@ -21,7 +21,12 @@ public class Terminal {
 	
 	public int entradaInteiro(String msg) {
 		System.out.print(msg);
-		int numero = entrada.nextInt();
-		return numero;
+		try {
+	        String numero = entrada.next();
+	        return Integer.parseInt(numero);
+	    } catch (Exception e) {
+	        mensagem("Entrada inválida, tente novamente");
+	        return entradaInteiro(msg);
+	    }
 	}
 }

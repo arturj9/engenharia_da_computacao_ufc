@@ -6,17 +6,9 @@ import java.util.Random;
 public class Plano {
 
 	private ArrayList<Celula> listaCelulas;
-
-	public ArrayList<Celula> getListaCelulas() {
-		return listaCelulas;
-	}
-
-	public void setListaCelulas(ArrayList<Celula> listaCelulas) {
-		this.listaCelulas = listaCelulas;
-	}
-
 	private int tamanhoX;
 	private int tamanhoY;
+
 
 	public Plano(int tamanhoX, int tamanhoY) {
 		listaCelulas = new ArrayList<Celula>();
@@ -90,6 +82,14 @@ public class Plano {
 
 	public void setTamanhoY(int tamanhoY) {
 		this.tamanhoY = tamanhoY;
+	}
+	
+	public ArrayList<Celula> getListaCelulas() {
+		return listaCelulas;
+	}
+
+	public void setListaCelulas(ArrayList<Celula> listaCelulas) {
+		this.listaCelulas = listaCelulas;
 	}
 
 }
