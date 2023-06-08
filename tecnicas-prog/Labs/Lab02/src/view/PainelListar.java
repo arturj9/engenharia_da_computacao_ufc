@@ -5,35 +5,35 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+import controller.Aluno;
+import controller.ListaAlunos;
+
 public class PainelListar extends Painel {
+	
+	public ListaAlunos alunos;
+	public JScrollPane painelRolagem;
 
-	public PainelListar(Color color) {
-		super(color);
-
-		Object[][] dados = { { "João", 1234567812, 2352355, "Ciências da Computação" }, 
-				{ "Maria", 3023323, 435552355, "Automação"  }, 
-				{ "Carlos", 405555, 54652355, "Telecomunicação"  },
-				{ "João", 25235553, 2352355, "Ciências da Computação" }, 
-				{ "Maria", 3023323, 435552355, "Automação"  }, 
-				{ "Carlos", 405555, 54652355, "Telecomunicação"  }, 
-				{ "João", 25235553, 2352355, "Ciências da Computação" }, 
-				{ "Maria", 3023323, 435552355, "Automação"  }, 
-				{ "Carlos", 405555, 54652355, "Telecomunicação"  },
-				{ "João", 25235553, 2352355, "Ciências da Computação" }, 
-				{ "Maria", 3023323, 435552355, "Automação"  }, 
-				{ "Carlos", 405555, 54652355, "Telecomunicação"  }, 
-				{ "João", 25235553, 2352355, "Ciências da Computação" }, 
-				{ "Maria", 3023323, 435552355, "Automação"  }, 
-				{ "Carlos", 405555, 54652355, "Telecomunicação"  },
-				{ "João", 25235553, 2352355, "Ciências da Computação" }, 
-				{ "Maria", 3023323, 435552355, "Automação"  }, 
-				{ "Carlos", 405555, 54652355, "Telecomunicação"  }, 
-				{ "João", 25235553, 2352355, "Ciências da Computação" }, 
-				{ "Maria", 3023323, 435552355, "Automação"  }, 
-				{ "Carlos", 405555, 54652355, "Telecomunicação"  },
-				{ "João", 25235553, 2352355, "Ciências da Computação" }, 
-				{ "Maria", 3023323, 435552355, "Automação"  }, 
-				{ "Carlos", 405555, 54652355, "Telecomunicação"  }};
+	public PainelListar(Color color, Janela janela) {
+		super(color,janela);
+		
+		atualizarDados();
+		
+		this.add(painelRolagem);
+		
+	}
+	
+	public void atualizarDados() {
+		alunos = new ListaAlunos();
+		
+		String[][] dados = new String[alunos.quantidadeAlunos()][4]; 
+		int cont = 0;
+		for (Aluno aluno: alunos.getListaAlunos()) {
+			dados[cont][0] = aluno.getNome();
+			dados[cont][1] = aluno.getCpf();
+			dados[cont][2] = aluno.getMatricula();
+			dados[cont++][3] = aluno.getVertente();
+		}
+		 
 
 		String[] colunas = { "Nome", "CPF", "Matrícula", "Vertente" };
 		
@@ -41,11 +41,12 @@ public class PainelListar extends Painel {
 		tabela.getColumnModel().getColumn(3).setPreferredWidth(150);
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tabela.setRowHeight(30);
-		
-		JScrollPane painelRolagem = new JScrollPane(tabela);
-		
-		this.add(painelRolagem);
-		
+		painelRolagem = new JScrollPane(tabela);
+	}
+	
+	public void visivel() {
+		atualizarDados();
+		this.setVisible(true);
 	}
 
 }

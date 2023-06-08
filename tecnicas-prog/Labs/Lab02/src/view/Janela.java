@@ -37,27 +37,27 @@ public class Janela extends JFrame {
 	}
 
 	public void configurarPaineis() {
-		painelBotoes = new Painel(new Color(224,224,224));
+		painelBotoes = new Painel(new Color(224,224,224),this);
 		configurarBotoes(painelBotoes);
 		this.add(painelBotoes, BorderLayout.NORTH);
 		
-		Painel painelConteudo = new Painel(Color.WHITE);
+		Painel painelConteudo = new Painel(Color.WHITE,this);
 		painelConteudo.setLayout(new FlowLayout());
 		
-		painelCadastrar = new PainelCadastrar(Color.WHITE);
+		painelCadastrar = new PainelCadastrar(Color.WHITE,this);
 		painelConteudo.add(painelCadastrar);
 		painelCadastrar.naoVisivel();
 		
 		
-		painelListar = new PainelListar(Color.WHITE);
+		painelListar = new PainelListar(Color.WHITE,this);
 		painelConteudo.add(painelListar);
 		painelListar.naoVisivel();
 		
-		painelAtualizar = new PainelAtualizar(Color.WHITE);
+		painelAtualizar = new PainelAtualizar(Color.WHITE,this);
 		painelConteudo.add(painelAtualizar);
 		painelAtualizar.naoVisivel();
 		
-		painelDeletar = new PainelDeletar(Color.WHITE);
+		painelDeletar = new PainelDeletar(Color.WHITE,this);
 		painelConteudo.add(painelDeletar);
 		painelDeletar.naoVisivel();
 		
