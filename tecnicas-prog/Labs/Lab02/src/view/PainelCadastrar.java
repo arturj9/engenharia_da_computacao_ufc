@@ -78,16 +78,17 @@ public class PainelCadastrar extends Painel {
 		public void actionPerformed(ActionEvent e) {
 			if (nome.getText().equals("") || cpf.getText().equals("") || matricula.getText().equals("")
 					|| vertente.getText().equals("")) {
-				JOptionPane.showMessageDialog(janela, "Preencha todos os campos");
+				JOptionPane.showMessageDialog(janela, "Preencha todos os campos", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
 				ListaAlunos alunos = new ListaAlunos();
 
 				try {
 					alunos.addAluno(new Aluno(nome.getText(), cpf.getText(), matricula.getText(), vertente.getText()));
-					alunos.salvar();
-					JOptionPane.showMessageDialog(janela, "Aluno cadastrado com sucesso!");
+					JOptionPane.showMessageDialog(janela, "Aluno cadastrado com sucesso!", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception ev) {
-					JOptionPane.showMessageDialog(janela, "Erro ao tentar cadastrar");
+					JOptionPane.showMessageDialog(janela, "Erro ao tentar cadastrar", "Erro",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 				nome.setText("");

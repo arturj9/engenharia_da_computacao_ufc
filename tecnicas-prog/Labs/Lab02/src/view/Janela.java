@@ -14,13 +14,14 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class Janela extends JFrame {
-	
+
 	public Painel painelBotoes;
 	public PainelCadastrar painelCadastrar;
 	public PainelListar painelListar;
 	public PainelAtualizar painelAtualizar;
 	public PainelDeletar painelDeletar;
-	
+	public Painel painelConteudo;
+
 	public Botao botaoCadastrar;
 	public Botao botaoListar;
 	public Botao botaoAtualizar;
@@ -37,30 +38,29 @@ public class Janela extends JFrame {
 	}
 
 	public void configurarPaineis() {
-		painelBotoes = new Painel(new Color(224,224,224),this);
+		painelBotoes = new Painel(new Color(224, 224, 224), this);
 		configurarBotoes(painelBotoes);
 		this.add(painelBotoes, BorderLayout.NORTH);
-		
-		Painel painelConteudo = new Painel(Color.WHITE,this);
+
+		painelConteudo = new Painel(Color.WHITE, this);
 		painelConteudo.setLayout(new FlowLayout());
-		
-		painelCadastrar = new PainelCadastrar(Color.WHITE,this);
+
+		painelCadastrar = new PainelCadastrar(Color.WHITE, this);
 		painelConteudo.add(painelCadastrar);
 		painelCadastrar.naoVisivel();
-		
-		
-		painelListar = new PainelListar(Color.WHITE,this);
+
+		painelListar = new PainelListar(Color.WHITE, this);
 		painelConteudo.add(painelListar);
 		painelListar.naoVisivel();
-		
-		painelAtualizar = new PainelAtualizar(Color.WHITE,this);
+
+		painelAtualizar = new PainelAtualizar(Color.WHITE, this);
 		painelConteudo.add(painelAtualizar);
 		painelAtualizar.naoVisivel();
-		
-		painelDeletar = new PainelDeletar(Color.WHITE,this);
+
+		painelDeletar = new PainelDeletar(Color.WHITE, this);
 		painelConteudo.add(painelDeletar);
 		painelDeletar.naoVisivel();
-		
+
 		this.add(painelConteudo, BorderLayout.CENTER);
 	}
 
@@ -68,15 +68,15 @@ public class Janela extends JFrame {
 		botaoCadastrar = new Botao("Cadastrar", Color.WHITE);
 		botaoCadastrar.addActionListener(new VisibleCadastrar());
 		painel.add(botaoCadastrar);
-		
+
 		botaoListar = new Botao("Listar", Color.WHITE);
-		botaoListar.addActionListener(new VisibleListar());
+		botaoListar.addActionListener(new VisibleListar(this));
 		painel.add(botaoListar);
-		
+
 		botaoAtualizar = new Botao("Atualizar", Color.WHITE);
 		botaoAtualizar.addActionListener(new VisibleAtualizar());
 		painel.add(botaoAtualizar);
-		
+
 		botaoDeletar = new Botao("Deletar", Color.WHITE);
 		botaoDeletar.addActionListener(new VisibleDeletar());
 		painel.add(botaoDeletar);
@@ -85,7 +85,7 @@ public class Janela extends JFrame {
 	public void updateTitle(String msg) {
 		this.setTitle(msg);
 	}
-	
+
 	public void setTelaDefault() {
 		painelCadastrar.naoVisivel();
 		painelListar.naoVisivel();
@@ -110,33 +110,45 @@ public class Janela extends JFrame {
 				painelAtualizar.naoVisivel();
 				painelDeletar.naoVisivel();
 				painelBotoes.setBackground(Color.WHITE);
-				botao.setBackground(new Color(224,224,224));
+				botao.setBackground(new Color(224, 224, 224));
 				updateTitle("Cadastrar");
-			}else
+			} else
 				setTelaDefault();
-			
+
 		}
 	}
-	
+
 	private class VisibleListar implements ActionListener {
+
+		public Janela janela;
+
+		public VisibleListar(Janela janela) {
+			this.janela = janela;
+		}
 
 		public void actionPerformed(ActionEvent e) {
 			JButton botao = (JButton) e.getSource();
 			if (!painelListar.isVisible()) {
 				setTelaDefault();
 				painelCadastrar.naoVisivel();
+
 				painelListar.visivel();
+
+				painelConteudo.remove(painelListar);
+				painelListar = new PainelListar(Color.WHITE, janela);
+				painelConteudo.add(painelListar);
+
 				painelAtualizar.naoVisivel();
 				painelDeletar.naoVisivel();
 				painelBotoes.setBackground(Color.WHITE);
-				botao.setBackground(new Color(224,224,224));
+				botao.setBackground(new Color(224, 224, 224));
 				updateTitle("Listar");
-			}else
+			} else
 				setTelaDefault();
-			
+
 		}
 	}
-	
+
 	private class VisibleAtualizar implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
@@ -148,14 +160,14 @@ public class Janela extends JFrame {
 				painelAtualizar.visivel();
 				painelDeletar.naoVisivel();
 				painelBotoes.setBackground(Color.WHITE);
-				botao.setBackground(new Color(224,224,224));
+				botao.setBackground(new Color(224, 224, 224));
 				updateTitle("Atualizar");
-			}else
+			} else
 				setTelaDefault();
-			
+
 		}
 	}
-	
+
 	private class VisibleDeletar implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
@@ -167,11 +179,11 @@ public class Janela extends JFrame {
 				painelAtualizar.naoVisivel();
 				painelDeletar.visivel();
 				painelBotoes.setBackground(Color.WHITE);
-				botao.setBackground(new Color(224,224,224));
+				botao.setBackground(new Color(224, 224, 224));
 				updateTitle("Deletar");
-			}else
+			} else
 				setTelaDefault();
-			
+
 		}
 	}
 }

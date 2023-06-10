@@ -14,29 +14,32 @@ public class ListaAlunos {
 
 	public void addAluno(Aluno aluno) {
 		listaAlunos.add(aluno);
+		this.salvar();
 	}
 
-	public void deletarAluno(String matricula) {
+	public boolean deletarAluno(String matricula) {
 		for (Aluno aluno : listaAlunos) {
 			if (aluno.getMatricula().equals(matricula)) {
 				listaAlunos.remove(aluno);
 				salvar();
 				buscarDados();
-				return;
+				return true;
 			}
 		}
+		return false;
 
 	}
 
-	public void atualizarVertente(String matricula, String novaVertente) {
+	public boolean atualizarVertente(String matricula, String novaVertente) {
 		for (Aluno aluno : listaAlunos) {
 			if (aluno.getMatricula().equals(matricula)) {
 				aluno.setVertente(novaVertente);
 				salvar();
 				buscarDados();
-				return;
+				return true;
 			}
 		}
+		return false;
 
 	}
 

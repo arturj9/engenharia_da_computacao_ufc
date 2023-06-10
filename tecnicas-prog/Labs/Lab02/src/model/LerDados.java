@@ -25,7 +25,6 @@ public class LerDados {
 			while (leitura.ready()) {
 				lista.add(separarDadosDoAluno(leitura.readLine()));
 			}
-			arquivo.close();
 
 		} catch (Exception e) {
 		}finally {
