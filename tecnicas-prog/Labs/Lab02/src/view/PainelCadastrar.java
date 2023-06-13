@@ -2,15 +2,12 @@ package view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controller.ListaAlunos;
@@ -18,10 +15,10 @@ import controller.Aluno;
 
 public class PainelCadastrar extends Painel {
 
-	public JTextField nome;
-	public JTextField cpf;
-	public JTextField matricula;
-	public JTextField vertente;
+	private JTextField nome;
+	private JTextField cpf;
+	private JTextField matricula;
+	private JTextField vertente;
 
 	public PainelCadastrar(Color color, Janela janela) {
 		super(color, janela);
@@ -78,16 +75,16 @@ public class PainelCadastrar extends Painel {
 		public void actionPerformed(ActionEvent e) {
 			if (nome.getText().equals("") || cpf.getText().equals("") || matricula.getText().equals("")
 					|| vertente.getText().equals("")) {
-				JOptionPane.showMessageDialog(janela, "Preencha todos os campos", "Aviso", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(getJanela(), "Preencha todos os campos", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
 				ListaAlunos alunos = new ListaAlunos();
 
 				try {
 					alunos.addAluno(new Aluno(nome.getText(), cpf.getText(), matricula.getText(), vertente.getText()));
-					JOptionPane.showMessageDialog(janela, "Aluno cadastrado com sucesso!", "Sucesso",
+					JOptionPane.showMessageDialog(getJanela(), "Aluno cadastrado com sucesso!", "Sucesso",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (Exception ev) {
-					JOptionPane.showMessageDialog(janela, "Erro ao tentar cadastrar", "Erro",
+					JOptionPane.showMessageDialog(getJanela(), "Erro ao tentar cadastrar", "Erro",
 							JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -99,5 +96,39 @@ public class PainelCadastrar extends Painel {
 
 		}
 	}
+
+	public JTextField getNome() {
+		return nome;
+	}
+
+	public void setNome(JTextField nome) {
+		this.nome = nome;
+	}
+
+	public JTextField getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(JTextField cpf) {
+		this.cpf = cpf;
+	}
+
+	public JTextField getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(JTextField matricula) {
+		this.matricula = matricula;
+	}
+
+	public JTextField getVertente() {
+		return vertente;
+	}
+
+	public void setVertente(JTextField vertente) {
+		this.vertente = vertente;
+	}
+	
+	
 
 }

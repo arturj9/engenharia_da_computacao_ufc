@@ -10,13 +10,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import controller.Aluno;
 import controller.ListaAlunos;
 
 public class PainelAtualizar extends Painel {
 
-	JTextField matricula;
-	JTextField vertente;
+	private JTextField matricula;
+	private JTextField vertente;
 
 	public PainelAtualizar(Color color, Janela janela) {
 		super(color, janela);
@@ -56,19 +55,19 @@ public class PainelAtualizar extends Painel {
 
 		public void actionPerformed(ActionEvent e) {
 			if (matricula.getText().equals("") || vertente.getText().equals("")) {
-				JOptionPane.showMessageDialog(janela, "Preencha todos os campos", "Aviso", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(getJanela(), "Preencha todos os campos", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
 				ListaAlunos alunos = new ListaAlunos();
 
 				try {
 					if (alunos.atualizarVertente(matricula.getText(), vertente.getText())) {
-						JOptionPane.showMessageDialog(janela, "Vertente atualizada com sucesso!", "Sucesso",
+						JOptionPane.showMessageDialog(getJanela(), "Vertente atualizada com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else
-						JOptionPane.showMessageDialog(janela, "Matrícula não encontrada", "Aviso",
+						JOptionPane.showMessageDialog(getJanela(), "Matrícula não encontrada", "Aviso",
 								JOptionPane.WARNING_MESSAGE);
 				} catch (Exception ev) {
-					JOptionPane.showMessageDialog(janela, "Erro ao tentar atualizar vertente", "Erro",
+					JOptionPane.showMessageDialog(getJanela(), "Erro ao tentar atualizar vertente", "Erro",
 							JOptionPane.ERROR_MESSAGE);
 				}
 
@@ -77,6 +76,22 @@ public class PainelAtualizar extends Painel {
 			}
 
 		}
+	}
+
+	public JTextField getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(JTextField matricula) {
+		this.matricula = matricula;
+	}
+
+	public JTextField getVertente() {
+		return vertente;
+	}
+
+	public void setVertente(JTextField vertente) {
+		this.vertente = vertente;
 	}
 
 }

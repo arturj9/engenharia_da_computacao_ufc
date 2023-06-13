@@ -10,12 +10,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import controller.Aluno;
 import controller.ListaAlunos;
 
 public class PainelDeletar extends Painel {
 
-	JTextField matricula;
+	private JTextField matricula;
 
 	public PainelDeletar(Color color, Janela janela) {
 		super(color, janela);
@@ -47,19 +46,19 @@ public class PainelDeletar extends Painel {
 
 		public void actionPerformed(ActionEvent e) {
 			if (matricula.getText().equals("")) {
-				JOptionPane.showMessageDialog(janela, "Preencha todos os campos", "Aviso", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(getJanela(), "Preencha todos os campos", "Aviso", JOptionPane.WARNING_MESSAGE);
 			} else {
 				ListaAlunos alunos = new ListaAlunos();
 
 				try {
 					if (alunos.deletarAluno(matricula.getText()))
-						JOptionPane.showMessageDialog(janela, "Aluno deletado com sucesso!", "Sucesso",
+						JOptionPane.showMessageDialog(getJanela(), "Aluno deletado com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
 					else
-						JOptionPane.showMessageDialog(janela, "Matrícula não encontrada", "Aviso",
+						JOptionPane.showMessageDialog(getJanela(), "Matrícula não encontrada", "Aviso",
 								JOptionPane.WARNING_MESSAGE);
 				} catch (Exception ev) {
-					JOptionPane.showMessageDialog(janela, "Erro ao tentar deletar", "Erro", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(getJanela(), "Erro ao tentar deletar", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 
 				matricula.setText("");
@@ -67,5 +66,15 @@ public class PainelDeletar extends Painel {
 
 		}
 	}
+
+	public JTextField getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(JTextField matricula) {
+		this.matricula = matricula;
+	}
+	
+	
 
 }

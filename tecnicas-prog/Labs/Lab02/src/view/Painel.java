@@ -5,11 +5,11 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 public class Painel extends JPanel {
-	public Janela janela;
+	private Janela janela;
 
 	public Painel(Color color, Janela janela) {
 		this.setBackground(color);
-		this.janela = janela;
+		this.setJanela(janela);
 	}
 
 	public void visivel() {
@@ -19,4 +19,14 @@ public class Painel extends JPanel {
 	public void naoVisivel() {
 		this.setVisible(false);
 	}
+
+	public Janela getJanela() {
+		return janela;
+	}
+
+	public void setJanela(Janela janela) {
+		this.janela = janela;
+	}
+	
+	
 }

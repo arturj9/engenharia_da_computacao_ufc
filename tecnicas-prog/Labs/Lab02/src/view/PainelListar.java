@@ -2,8 +2,6 @@ package view;
 
 import java.awt.Color;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 import controller.Aluno;
@@ -11,8 +9,8 @@ import controller.ListaAlunos;
 
 public class PainelListar extends Painel {
 
-	public ListaAlunos alunos;
-	public JScrollPane painelRolagem;
+	private ListaAlunos alunos;
+	private JScrollPane painelRolagem;
 
 	public PainelListar(Color color, Janela janela) {
 		super(color, janela);
@@ -47,5 +45,23 @@ public class PainelListar extends Painel {
 	public void visivel() {
 		this.setVisible(true);
 	}
+
+	public ListaAlunos getAlunos() {
+		return alunos;
+	}
+
+	public void setAlunos(ListaAlunos alunos) {
+		this.alunos = alunos;
+	}
+
+	public JScrollPane getPainelRolagem() {
+		return painelRolagem;
+	}
+
+	public void setPainelRolagem(JScrollPane painelRolagem) {
+		this.painelRolagem = painelRolagem;
+	}
+	
+	
 
 }

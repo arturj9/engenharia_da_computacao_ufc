@@ -10,9 +10,9 @@ import controller.Aluno;
 
 public class LerDados {
 	
-	 public ArrayList<Aluno> lista;
-	 
-	 public LerDados() {
+	 private ArrayList<Aluno> lista;
+
+	public LerDados() {
 	    lista= new ArrayList<Aluno>();
 	}
 
@@ -43,4 +43,14 @@ public class LerDados {
 		Aluno aluno = new Aluno(dados[0], dados[1], dados[2], dados[3]);
 		return aluno;
 	}
+	
+	public ArrayList<Aluno> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<Aluno> lista) {
+		this.lista = lista;
+	}
+	
+	
 }

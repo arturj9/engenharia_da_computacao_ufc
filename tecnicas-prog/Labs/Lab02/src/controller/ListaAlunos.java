@@ -75,7 +75,7 @@ public class ListaAlunos {
 	public void buscarDados() {
 		LerDados ler = new LerDados();
 		ler.lerDados("dados/alunos.txt");
-		setListaAlunos(ler.lista);
+		setListaAlunos(ler.getLista());
 	}
 
 }

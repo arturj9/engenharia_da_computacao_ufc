@@ -2,30 +2,26 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+
 
 public class Janela extends JFrame {
 
-	public Painel painelBotoes;
-	public PainelCadastrar painelCadastrar;
-	public PainelListar painelListar;
-	public PainelAtualizar painelAtualizar;
-	public PainelDeletar painelDeletar;
-	public Painel painelConteudo;
+	private Painel painelBotoes;
+	private PainelCadastrar painelCadastrar;
+	private PainelListar painelListar;
+	private PainelAtualizar painelAtualizar;
+	private PainelDeletar painelDeletar;
+	private Painel painelConteudo;
 
-	public Botao botaoCadastrar;
-	public Botao botaoListar;
-	public Botao botaoAtualizar;
-	public Botao botaoDeletar;
+	private Botao botaoCadastrar;
+	private Botao botaoListar;
+	private Botao botaoAtualizar;
+	private Botao botaoDeletar;
 
 	public Janela() {
 		this.setSize(700, 700);
@@ -186,4 +182,86 @@ public class Janela extends JFrame {
 
 		}
 	}
+
+	public Painel getPainelBotoes() {
+		return painelBotoes;
+	}
+
+	public void setPainelBotoes(Painel painelBotoes) {
+		this.painelBotoes = painelBotoes;
+	}
+
+	public PainelCadastrar getPainelCadastrar() {
+		return painelCadastrar;
+	}
+
+	public void setPainelCadastrar(PainelCadastrar painelCadastrar) {
+		this.painelCadastrar = painelCadastrar;
+	}
+
+	public PainelListar getPainelListar() {
+		return painelListar;
+	}
+
+	public void setPainelListar(PainelListar painelListar) {
+		this.painelListar = painelListar;
+	}
+
+	public PainelAtualizar getPainelAtualizar() {
+		return painelAtualizar;
+	}
+
+	public void setPainelAtualizar(PainelAtualizar painelAtualizar) {
+		this.painelAtualizar = painelAtualizar;
+	}
+
+	public PainelDeletar getPainelDeletar() {
+		return painelDeletar;
+	}
+
+	public void setPainelDeletar(PainelDeletar painelDeletar) {
+		this.painelDeletar = painelDeletar;
+	}
+
+	public Painel getPainelConteudo() {
+		return painelConteudo;
+	}
+
+	public void setPainelConteudo(Painel painelConteudo) {
+		this.painelConteudo = painelConteudo;
+	}
+
+	public Botao getBotaoCadastrar() {
+		return botaoCadastrar;
+	}
+
+	public void setBotaoCadastrar(Botao botaoCadastrar) {
+		this.botaoCadastrar = botaoCadastrar;
+	}
+
+	public Botao getBotaoListar() {
+		return botaoListar;
+	}
+
+	public void setBotaoListar(Botao botaoListar) {
+		this.botaoListar = botaoListar;
+	}
+
+	public Botao getBotaoAtualizar() {
+		return botaoAtualizar;
+	}
+
+	public void setBotaoAtualizar(Botao botaoAtualizar) {
+		this.botaoAtualizar = botaoAtualizar;
+	}
+
+	public Botao getBotaoDeletar() {
+		return botaoDeletar;
+	}
+
+	public void setBotaoDeletar(Botao botaoDeletar) {
+		this.botaoDeletar = botaoDeletar;
+	}
+	
+	
 }
