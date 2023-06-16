@@ -1,14 +1,12 @@
 package controller;
 
-import java.util.ArrayList;
-
 public class Celula {
 
 	private int id;
 	private int posicaoX;
 	private int posicaoY;
-	private String simbolo = "*";
-	private ArrayList<Robo> listaRobos;
+	private String simbolo = "";
+	private Robo robo;
 	private Bug bug;
 	private Aluno aluno;
 	private boolean visitado;
@@ -17,15 +15,9 @@ public class Celula {
 		posicaoX = x;
 		posicaoY = y;
 		this.id = id;
-		listaRobos = new ArrayList<Robo>();
 		bug = null;
 		aluno = null;
-		visitado = false;
-	}
-
-	public String imprimir() {
-		return "Celula:  " + id + " x: " + posicaoX + " y: " + posicaoY + "Tem aluno: " + this.verificaAluno()
-				+ "Tem bug: " + this.verificaBug() + "Tem robo: " + this.verificaListaRobos();
+		visitado = true;
 	}
 
 	public boolean verificaAluno() {
@@ -40,19 +32,18 @@ public class Celula {
 		return false;
 	}
 
-	public boolean verificaListaRobos() {
-		if (listaRobos.size() != 0)
+	public boolean verificaRobo() {
+		if (robo != null)
 			return true;
 		return false;
 	}
 
 	public void addRobo(Robo robo) {
-		this.listaRobos.add(robo);
+		this.setRobo(robo);
 	}
 
-	public void retirarRobo(Robo robo) {
-		int indexRetirar = listaRobos.indexOf(robo);
-		listaRobos.remove(indexRetirar);
+	public void retirarRobo() {
+		this.setRobo(null);
 	}
 
 	public void addBug(Bug bug) {
@@ -91,14 +82,6 @@ public class Celula {
 		this.posicaoY = posicaoY;
 	}
 
-	public ArrayList<Robo> getListaRobos() {
-		return listaRobos;
-	}
-
-	public void setListaRobos(ArrayList<Robo> listaRobos) {
-		this.listaRobos = listaRobos;
-	}
-
 	public Bug getBug() {
 		return bug;
 	}
@@ -123,14 +106,12 @@ public class Celula {
 	}
 
 	private void verificaSimbolo() {
-		if (verificaListaRobos())
-			setSimbolo(listaRobos.get(0).getIdentificador());
+		if (verificaRobo())
+			setSimbolo(robo.getIdentificador());
 		else if (verificaAluno() && visitado)
 			setSimbolo(aluno.getIdentificador());
 		else if (verificaBug() && visitado)
 			setSimbolo(bug.getIdentificador());
-		else if (visitado)
-			setSimbolo("@");
 	}
 
 	public void setSimbolo(String simbolo) {
@@ -145,22 +126,27 @@ public class Celula {
 		this.visitado = true;
 	}
 
+	public Robo getRobo() {
+		return robo;
+	}
+
+	public void setRobo(Robo robo) {
+		this.robo = robo;
+	}
+
 	public void calcularPontuacaoRobos() {
-		if (verificaListaRobos() && !visitado) {
-			for (Robo robo : listaRobos) {
-				if(verificaAluno()) {
-					robo.setPontuacao(this.aluno.getPontos());
-					robo.addAlunoSalvo(aluno);
-					this.aluno.setEncontrado(true);
-				}
-				else if(verificaBug()) {
-					robo.setPontuacao(this.bug.getPontos());
-					robo.addBugEncontrado(bug);
-					this.bug.setEncontrado(true);
-				}
+		if (verificaRobo() && !visitado) {
+			if (verificaAluno()) {
+				robo.setPontuacao(this.aluno.getPontos());
+				robo.addAlunoSalvo(aluno);
+				this.aluno.setEncontrado(true);
+			} else if (verificaBug()) {
+				robo.setPontuacao(this.bug.getPontos());
+				robo.addBugEncontrado(bug);
+				this.bug.setEncontrado(true);
 			}
-			this.setVisitado();
 		}
+		this.setVisitado();
 	}
 
 }

@@ -39,8 +39,13 @@ public class PainelInicial extends Painel{
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			janela.getPainelTabuleiro().visivel();
-			janela.getPainelMenu().visivel();
+			if(!nome.getText().equals("")) {
+				janela.getPainelTabuleiro().visivel();
+				janela.getPainelMenu().visivel();
+			}else {
+				JOptionPane.showMessageDialog(getJanela(), "Informe o nome do jogador", "Aviso",
+						JOptionPane.WARNING_MESSAGE);
+			}
 
 		}
 

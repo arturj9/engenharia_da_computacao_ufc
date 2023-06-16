@@ -25,10 +25,10 @@ public class Janela extends JFrame{
 	public void configurarPaineis() {
 		this.setPainelInicial(new PainelInicial(new Color(200,236,249), this));
 		this.add(painelInicial,BorderLayout.NORTH);
-		this.setPainelTabuleiro(new PainelTabuleiro(Color.BLACK, this));
+		this.setPainelTabuleiro(new PainelTabuleiro(new Color(200,236,249), this));
 		painelTabuleiro.naoVisivel();
 		this.add(painelTabuleiro,BorderLayout.CENTER);
-		this.setPainelMenu(new PainelMenu(Color.cyan, this));
+		this.setPainelMenu(new PainelMenu(new Color(200,236,249), this));
 		painelMenu.naoVisivel();
 		this.add(painelMenu,BorderLayout.EAST);
 	}

@@ -35,7 +35,7 @@ public abstract class Robo extends Personagem implements Movimento {
 
 	public boolean movimentar(int x, int y) {
 		if (verificarMovimento(x, y)) {
-			plano.retornarCelula(this.getPosicaox(), this.getPosicaoy()).retirarRobo(this);
+			plano.retornarCelula(this.getPosicaox(), this.getPosicaoy()).retirarRobo();
 			plano.retornarCelula(x, y).addRobo(this);
 			this.addCelulaVisitada(plano.retornarCelula(x, y));
 			this.setCoordenada(x, y);
