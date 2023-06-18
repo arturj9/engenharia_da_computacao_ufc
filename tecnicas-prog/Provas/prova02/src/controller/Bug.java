@@ -4,8 +4,8 @@ public class Bug extends Personagem implements Pontuacao {
 
 	private boolean encontrado;
 
-	public Bug(String nome, int posicaox, int posicaoy) {
-		super("b", nome, posicaox, posicaoy);
+	public Bug(String nome) {
+		super(new Icon("src/img/bug.png"), nome);
 		this.setEncontrado(false);
 	}
 

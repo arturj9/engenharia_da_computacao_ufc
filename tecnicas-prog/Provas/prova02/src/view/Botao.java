@@ -9,4 +9,8 @@ public class Botao extends JButton {
 		super(msg);
 		this.setBackground(color);
 	}
+	
+	public Botao(String msg) {
+		super(msg);
+	}
 }

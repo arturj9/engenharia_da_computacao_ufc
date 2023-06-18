@@ -1,11 +1,12 @@
 package controller;
 
+import javax.swing.ImageIcon;
+
 public class Celula {
 
 	private int id;
 	private int posicaoX;
 	private int posicaoY;
-	private String simbolo = "";
 	private Robo robo;
 	private Bug bug;
 	private Aluno aluno;
@@ -17,7 +18,22 @@ public class Celula {
 		this.id = id;
 		bug = null;
 		aluno = null;
+		setRobo(null);
 		visitado = true;
+	}
+	
+	public Celula(int id, int x, int y,Robo robo) {
+		posicaoX = x;
+		posicaoY = y;
+		this.id = id;
+		bug = null;
+		aluno = null;
+		addRobo(robo);
+		visitado = true;
+	}
+	
+	public Celula(Robo robo) {
+		addRobo(robo);
 	}
 
 	public boolean verificaAluno() {
@@ -56,6 +72,33 @@ public class Celula {
 		if (!this.verificaBug()) {
 			this.aluno = aluno;
 		}
+	}
+	
+	public Icon getIcon() {
+		if (verificaRobo())
+			return robo.getIcon();
+		else if (verificaAluno() && visitado)
+			return aluno.getIcon();
+		else if (verificaBug() && visitado)
+			return bug.getIcon();
+		return null;
+	}
+	
+	public void calcularPontuacaoRobos(Jogador jogador) {
+		if (verificaRobo() && !visitado) {
+			if (verificaAluno()) {
+				robo.setPontuacao(this.aluno.getPontos());
+				robo.addAlunoSalvo(aluno);
+				jogador.addPontuacao(aluno.getPontos());
+				this.aluno.setEncontrado(true);
+			} else if (verificaBug()) {
+				robo.setPontuacao(this.bug.getPontos());
+				robo.addBugEncontrado(bug);
+				jogador.addPontuacao(bug.getPontos());
+				this.bug.setEncontrado(true);
+			}
+		}
+		this.setVisitado();
 	}
 
 	public int getId() {
@@ -98,25 +141,6 @@ public class Celula {
 		this.aluno = aluno;
 	}
 
-	public String getSimbolo() {
-		verificaSimbolo();
-		if (this.getPosicaoY() == 1)
-			return "\n " + simbolo + " ";
-		return " " + simbolo + " ";
-	}
-
-	private void verificaSimbolo() {
-		if (verificaRobo())
-			setSimbolo(robo.getIdentificador());
-		else if (verificaAluno() && visitado)
-			setSimbolo(aluno.getIdentificador());
-		else if (verificaBug() && visitado)
-			setSimbolo(bug.getIdentificador());
-	}
-
-	public void setSimbolo(String simbolo) {
-		this.simbolo = simbolo;
-	}
 
 	public boolean isVisitado() {
 		return visitado;
@@ -133,20 +157,4 @@ public class Celula {
 	public void setRobo(Robo robo) {
 		this.robo = robo;
 	}
-
-	public void calcularPontuacaoRobos() {
-		if (verificaRobo() && !visitado) {
-			if (verificaAluno()) {
-				robo.setPontuacao(this.aluno.getPontos());
-				robo.addAlunoSalvo(aluno);
-				this.aluno.setEncontrado(true);
-			} else if (verificaBug()) {
-				robo.setPontuacao(this.bug.getPontos());
-				robo.addBugEncontrado(bug);
-				this.bug.setEncontrado(true);
-			}
-		}
-		this.setVisitado();
-	}
-
 }

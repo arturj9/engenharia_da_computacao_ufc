@@ -2,7 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
-public abstract class Robo extends Personagem implements Movimento {
+public class Robo extends Personagem{
 
 	private int id;
 	private ArrayList<Celula> historico;
@@ -11,52 +11,31 @@ public abstract class Robo extends Personagem implements Movimento {
 	private Plano plano;
 	private int pontuacao;
 
-	public Robo(int id, String nome, int posicaox, int posicaoy, Plano plano, String identificador) {
-		super(identificador, nome, posicaox, posicaoy);
+	public Robo(int id, String nome, Plano plano, Icon icon) {
+		super(icon, nome);
 		this.setId(id);
 		this.setPlano(plano);
 		this.setPontuacao(0);
 		this.setHistorico(new ArrayList<Celula>());
 		this.setAlunosSalvos(new ArrayList<Aluno>());
 		this.setBugsEncontrados(new ArrayList<Bug>());
-		plano.retornarCelula(posicaox, posicaoy).addRobo(this);
 	}
 
-	public void setCoordenada(int x, int y) {
-		this.setPosicaox(x);
-		this.setPosicaoy(y);
-	}
-
-	public boolean verificarMovimento(int x, int y) {
-		if (x > 0 && x <= plano.getTamanhoX() && y > 0 && y <= plano.getTamanhoY())
+	public boolean verificarMovimento(Celula celula) {
+		if (!celula.verificaRobo())
 			return true;
 		return false;
 	}
 
-	public boolean movimentar(int x, int y) {
-		if (verificarMovimento(x, y)) {
-			plano.retornarCelula(this.getPosicaox(), this.getPosicaoy()).retirarRobo();
-			plano.retornarCelula(x, y).addRobo(this);
-			this.addCelulaVisitada(plano.retornarCelula(x, y));
-			this.setCoordenada(x, y);
+	public boolean movimentar(Celula novaCelula) {
+		if (verificarMovimento(novaCelula)) {
+			Celula celulaAtual = plano.retornarCelulaDeRobo(this);
+			celulaAtual.retirarRobo();
+			novaCelula.addRobo(this);
+			this.addCelulaVisitada(novaCelula);
 			return true;
 		}
 		return false;
-	}
-
-	public String infoPontos() {
-		return this.getIdentificador() + " - " + this.getNome() + ": " + this.getPontuacao() + " ponto(s)";
-	}
-
-	public String imprimir() {
-		String texto = this.getIdentificador() + " - " + this.getNome() + "\nPontuacao: " + this.getPontuacao()
-				+ "\nHistorico:";
-		for (Celula celula : historico) {
-			texto += "\nX: " + celula.getPosicaoX() + " Y: " + celula.getPosicaoY();
-		}
-		texto += "\nAlunos salvos: " + this.getAlunosSalvos().size() + "\nBugs encontrados: "
-				+ this.getBugsEncontrados().size();
-		return texto;
 	}
 
 	public int getId() {

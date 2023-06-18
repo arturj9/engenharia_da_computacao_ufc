@@ -1,24 +1,12 @@
 package controller;
 
 public abstract class Personagem {
-	private String identificador;
+	private Icon icon;
 	private String nome;
-	private int posicaox;
-	private int posicaoy;
 
-	public Personagem(String identificador, String nome, int posicaox, int posicaoy) {
-		this.identificador = identificador;
+	public Personagem(Icon icon, String nome) {
+		this.setIcon(icon);
 		this.nome = nome;
-		this.posicaox = posicaox;
-		this.posicaoy = posicaoy;
-	}
-
-	public String getIdentificador() {
-		return identificador;
-	}
-
-	public void setIdentificador(String identificador) {
-		this.identificador = identificador;
 	}
 
 	public String getNome() {
@@ -29,20 +17,12 @@ public abstract class Personagem {
 		this.nome = nome;
 	}
 
-	public int getPosicaox() {
-		return posicaox;
+	public Icon getIcon() {
+		return icon;
 	}
 
-	public void setPosicaox(int posicaox) {
-		this.posicaox = posicaox;
-	}
-
-	public int getPosicaoy() {
-		return posicaoy;
-	}
-
-	public void setPosicaoy(int posicaoy) {
-		this.posicaoy = posicaoy;
+	public void setIcon(Icon icon) {
+		this.icon = icon;
 	}
 
 }

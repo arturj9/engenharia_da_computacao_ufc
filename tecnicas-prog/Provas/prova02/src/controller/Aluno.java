@@ -4,8 +4,8 @@ public class Aluno extends Personagem implements Pontuacao {
 
 	private boolean encontrado;
 
-	public Aluno(String nome, int posicaox, int posicaoy) {
-		super("a", nome, posicaox, posicaoy);
+	public Aluno(String nome) {
+		super(new Icon("src/img/aluno.png"), nome);
 		this.setEncontrado(false);
 	}
 

@@ -28,5 +28,4 @@ public class Painel extends JPanel {
 		this.janela = janela;
 	}
 	
-	
 }

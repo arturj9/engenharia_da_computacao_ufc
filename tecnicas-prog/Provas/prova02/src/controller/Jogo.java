@@ -42,13 +42,6 @@ public class Jogo {
 		int contador = 1;
 		int xInicial = 1;
 		int yInicial = 1;
-		this.robos.add(new Andador(contador++, "Andador", xInicial, yInicial, plano, "A"));
-		this.robos.add(new Peao(contador++, "Peao", xInicial, yInicial, plano, "P"));
-		this.robos.add(new Torre(contador++, "Torre", xInicial, yInicial, plano, "T"));
-		this.robos.add(new Bispo(contador++, "Bispo", xInicial, yInicial, plano, "B"));
-		this.robos.add(new Cavalo(contador++, "Cavalo", xInicial, yInicial, plano, "C"));
-		this.robos.add(new Rei(contador++, "Rei", xInicial, yInicial, plano, "R"));
-		this.robos.add(new Rainha(contador++, "Rainha", xInicial, yInicial, plano, "r"));
 	}
 
 	public void iniciarAlunos() {
@@ -115,17 +108,6 @@ public class Jogo {
 		vez(robo);
 	}
 
-	public void tentarAvancar(Robo robo, int numero) {
-		if (!robo.avancar(numero)) {
-			tentarNovamente(robo);
-		}
-	}
-
-	public void tentarRetroceder(Robo robo, int numero) {
-		if (!robo.retroceder(numero)) {
-			tentarNovamente(robo);
-		}
-	}
 
 	public void fimDeJogo() {
 		relatorioFinal();
