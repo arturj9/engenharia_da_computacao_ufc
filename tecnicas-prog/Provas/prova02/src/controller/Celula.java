@@ -19,7 +19,7 @@ public class Celula {
 		bug = null;
 		aluno = null;
 		setRobo(null);
-		visitado = true;
+		visitado = false;
 	}
 	
 	public Celula(int id, int x, int y,Robo robo) {

@@ -9,7 +9,6 @@ public class Plano {
 	private ArrayList<Aluno> alunos;
 	private ArrayList<Bug> bugs;
 	private ArrayList<Robo> robos;
-	private Robo roboSelecionado;
 	private int tamanhoX;
 	private int tamanhoY;
 
@@ -18,7 +17,6 @@ public class Plano {
 		alunos = new ArrayList<Aluno>();
 		bugs = new ArrayList<Bug>();
 		robos = new ArrayList<Robo>();
-		setRoboSelecionado(null);
 		int contador = 1;
 		for (int i = tamanhoX; i >= 1; i--) {
 			for (int j = 1; j <= tamanhoY; j++) {
@@ -75,15 +73,14 @@ public class Plano {
 
 	public void iniciarRobos() {
 		int contador = 1;
-		robos.add(new Robo(contador++, "Andador", this, new Icon("src/img/robo1.png")));
-		robos.add(new Robo(contador++, "Cavalo", this, new Icon("src/img/robo2.png")));
-		robos.add(new Robo(contador++, "Rei", this, new Icon("src/img/robo3.png")));
+		robos.add(new Robo(contador++, "Andador", this, new Icon("src/img/andador.png")));
+		robos.add(new Robo(contador++, "Cavalo", this, new Icon("src/img/cavalo.png")));
+		robos.add(new Robo(contador++, "Rei", this, new Icon("src/img/rei.png")));
 	}
 
 	public void iniciarAlunos(int quant) {
 		Celula celula;
 		Aluno aluno;
-
 		for (int i = 1; i <= quant; i++) {
 			celula = this.sortearCelula();
 			aluno = new Aluno("Aluno " + i);
@@ -100,6 +97,12 @@ public class Plano {
 			bug = new Bug("Bug " + i);
 			celula.addBug(bug);
 			bugs.add(bug);
+		}
+	}
+	
+	public void retirarRobos() {
+		for (Robo robo:robos) {
+			retornarCelulaDeRobo(robo).retirarRobo();;
 		}
 	}
 
@@ -151,29 +154,4 @@ public class Plano {
 		this.robos = robos;
 	}
 	
-	public boolean verificaRoboSelecionado() {
-		if(roboSelecionado!=null)
-			return true;
-		return false;
-	}
-	
-	public boolean addRoboSelecionado(Robo roboSelecionado) {
-		if(!verificaRoboSelecionado()&&roboSelecionado!=null) {
-			setRoboSelecionado(roboSelecionado);
-			return true;
-		}
-		return false;
-	}
-	
-	public void retiraRoboSelecionado() {
-		setRoboSelecionado(null);
-	}
-
-	public Robo getRoboSelecionado() {
-		return roboSelecionado;
-	}
-
-	public void setRoboSelecionado(Robo roboSelecionado) {
-		this.roboSelecionado = roboSelecionado;
-	}
 }
