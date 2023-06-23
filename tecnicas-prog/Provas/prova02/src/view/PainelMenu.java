@@ -6,39 +6,47 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import controller.Celula;
 import controller.Jogador;
+import controller.Partida;
 import controller.Plano;
 import controller.Robo;
+import view.eventos.ProximaJogada;
+import view.eventos.SairDoJogo;
+import view.eventos.Selecionar;
+import view.eventos.Verificar;
+import controller.Icon;
+import controller.Partidas;
 
 public class PainelMenu extends Painel {
 
-	private Jogador jogador;
-	private ArrayList<Robo> robos;
+	private Partida partida;
 	private ArrayList<BotaoCelula> botoesCelula;
 	private Robo roboSelecionado;
-
-	private int quantJogadas;
+	private Painel painelPontuacao;
+	private Painel painelTotal;
+	private Painel painelRobosPontuacao;
+	private JLabel labelPontuacao;
 	private int pontuacao;
-	private int alunos;
-	private int bugs;
+	private int alunosSalvos;
+	private int bugsEncontrados;
 
-	public PainelMenu(Color color, Janela janela) {
+	public PainelMenu(Color color, JanelaPrincipal janela, Partida partida) {
 		super(color, janela);
+		setPartida(partida);
 
 		setBotoesCelula(new ArrayList<BotaoCelula>());
-		setRobos(janela.getPainelTabuleiro().getPlano().getRobos());
+		partida.setRobos(janela.getPainelTabuleiro().getPlano().getRobos());
 		setPontuacao(0);
-		setAlunos(0);
-		setBugs(0);
+		setAlunosSalvos(0);
+		setBugsEncontrados(0);
 
 		this.setPreferredSize(new Dimension(300, 700));
 
@@ -46,140 +54,47 @@ public class PainelMenu extends Painel {
 		Dimension dRobo = new Dimension(96, 70);
 		Color corBotao = new Color(134, 193, 239);
 
-		Painel painelPontuacao = new Painel(color, janela);
-		painelPontuacao.setLayout(new GridLayout(4, 1));
+		painelPontuacao = new Painel(color, janela);
+		painelPontuacao.setLayout(new GridLayout(6, 1));
+		painelTotal = getPainelTotal();
 
-		JLabel labelPontuacao = getLabelPontuacao();
-		JLabel labelTotal = getLabelTotal();
-		JLabel robop1 = new JLabel("Robo1");
-		JLabel robop2 = new JLabel("Robo2");
-		JLabel robop3 = new JLabel("Robo3");
+		labelPontuacao = getLabelPontuacao();
 
 		painelPontuacao.add(labelPontuacao);
-		painelPontuacao.add(labelTotal);
-		painelPontuacao.add(robop1);
-		painelPontuacao.add(robop2);
-		painelPontuacao.add(robop3);
+		painelPontuacao.add(new JLabel());
+		painelPontuacao.add(painelTotal);
+		painelPontuacao.add(new JLabel());
+		setPainelRobosPontuacao(getPainelRobosPontuacao());
+		painelPontuacao.add(painelRobosPontuacao);
 
 		Painel painelRobos = new Painel(color, janela);
 		ArrayList<Celula> celulas = janela.getPainelTabuleiro().getPlano().getListaCelulas();
 		painelRobos.setLayout(new GridLayout(1, 3));
-		for (Robo robo : robos) {
+		for (Robo robo : partida.getRobos()) {
 			Celula celula = new Celula(robo);
 			celulas.add(celula);
-			BotaoCelula botaoCelula = new BotaoCelula(Color.cyan, celula);
+			BotaoCelula botaoCelula = new BotaoCelula(Color.cyan, celula,new Selecionar(janela));
 			botaoCelula.setPreferredSize(dRobo);
-			botaoCelula.addActionListener(new Selecionar(janela));
 			botoesCelula.add(botaoCelula);
 			painelRobos.add(botaoCelula);
 		}
 
 		Painel painelBotoes = new Painel(color, janela);
 		painelBotoes.setLayout(new GridLayout(3, 1));
-		Botao botaoVerificar = new Botao("Verificar", corBotao);
+		Botao botaoVerificar = new Botao("Verificar", corBotao, new Verificar(janela));
 		botaoVerificar.setPreferredSize(dimension);
-		botaoVerificar.addActionListener(new Verificar(janela));
-		Botao botaoProximaJogada = new Botao("Proxima Jogada", corBotao);
-		botaoProximaJogada.addActionListener(new ProximaRodada(janela));
+		Botao botaoProximaJogada = new Botao("Proxima Jogada", corBotao, new ProximaJogada(janela));
 		botaoProximaJogada.setPreferredSize(dimension);
-		Botao botaoSairDoJogo = new Botao("Sair do Jogo", corBotao);
+		Botao botaoSairDoJogo = new Botao("Sair do Jogo", corBotao, new SairDoJogo(janela));
 		botaoSairDoJogo.setPreferredSize(dimension);
 		painelBotoes.add(botaoVerificar);
 		painelBotoes.add(botaoProximaJogada);
 		painelBotoes.add(botaoSairDoJogo);
 
-		this.add(painelPontuacao, BorderLayout.NORTH);
-		this.add(painelRobos, BorderLayout.CENTER);
-		this.add(painelBotoes, BorderLayout.SOUTH);
+		this.add(painelPontuacao);
+		this.add(painelRobos);
+		this.add(painelBotoes);
 
-	}
-
-	private class Verificar implements ActionListener {
-
-		private Janela janela;
-
-		public Verificar(Janela janela) {
-			this.setJanela(janela);
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			if (verificaRobos()) {
-				for (Celula celula : janela.getPainelTabuleiro().getPlano().getListaCelulas()) {
-					if (celula.verificaRobo()) {
-						celula.setVisitado();
-						janela.getPainelTabuleiro().getBotoesCelulas().get(celula.getId() - 1)
-								.setBackground(new Color(200, 236, 249));
-					}
-
-				}
-				robosDefault();
-				atualizar();
-				janela.getPainelTabuleiro().atualizar();
-			} else
-				JOptionPane.showMessageDialog(getJanela(), "Posicione todos os robos", "Aviso",
-						JOptionPane.WARNING_MESSAGE);
-
-		}
-
-		public Janela getJanela() {
-			return janela;
-		}
-
-		public void setJanela(Janela janela) {
-			this.janela = janela;
-		}
-	}
-
-	private class Selecionar implements ActionListener {
-
-		private Janela janela;
-
-		public Selecionar(Janela janela) {
-			this.setJanela(janela);
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			BotaoCelula botaoCelula = (BotaoCelula) e.getSource();
-			botoesDefault();
-			if (janela.getPainelMenu().addRoboSelecionado(botaoCelula.getCelula().getRobo())) {
-				botaoCelula.setBackground(Color.white);
-			} else {
-				janela.getPainelMenu().retiraRoboSelecionado();
-			}
-
-		}
-
-		public Janela getJanela() {
-			return janela;
-		}
-
-		public void setJanela(Janela janela) {
-			this.janela = janela;
-		}
-	}
-
-	private class ProximaRodada implements ActionListener {
-
-		private Janela janela;
-
-		public ProximaRodada(Janela janela) {
-			this.setJanela(janela);
-		}
-
-		public void actionPerformed(ActionEvent e) {
-			for (BotaoCelula botaoCelula : botoesCelula) {
-				botaoCelula.setEnabled(true);
-			}
-
-		}
-
-		public Janela getJanela() {
-			return janela;
-		}
-
-		public void setJanela(Janela janela) {
-			this.janela = janela;
-		}
 	}
 
 	public boolean verificaRobos() {
@@ -199,7 +114,7 @@ public class PainelMenu extends Painel {
 	public void robosDefault() {
 		getJanela().getPainelTabuleiro().getPlano().retirarRobos();
 		int index = 0;
-		for (Robo robo : robos) {
+		for (Robo robo : partida.getRobos()) {
 			botoesCelula.get(index++).getCelula().addRobo(robo);
 		}
 	}
@@ -217,9 +132,12 @@ public class PainelMenu extends Painel {
 		return new JLabel(lPontuacao);
 	}
 
-	public JLabel getLabelTotal() {
-		String lTotal = "Total: Alunos: " + getAlunos() + " Bugs: " + getBugs();
-		return new JLabel(lTotal);
+	public void setLabelPontuacao(JLabel labelPontuacao) {
+		this.labelPontuacao = labelPontuacao;
+	}
+
+	public void atualizaPontuacao() {
+		setPontuacao();
 	}
 
 	public int getPontuacao() {
@@ -230,28 +148,8 @@ public class PainelMenu extends Painel {
 		this.pontuacao = pontuacao;
 	}
 
-	public int getAlunos() {
-		return alunos;
-	}
-
-	public void setAlunos(int alunos) {
-		this.alunos = alunos;
-	}
-
-	public int getBugs() {
-		return bugs;
-	}
-
-	public void setBugs(int bugs) {
-		this.bugs = bugs;
-	}
-
-	public ArrayList<Robo> getRobos() {
-		return robos;
-	}
-
-	public void setRobos(ArrayList<Robo> robos) {
-		this.robos = robos;
+	public void setPontuacao() {
+		this.pontuacao = partida.getPontuacao();
 	}
 
 	public ArrayList<BotaoCelula> getBotoesCelula() {
@@ -260,22 +158,6 @@ public class PainelMenu extends Painel {
 
 	public void setBotoesCelula(ArrayList<BotaoCelula> botoesCelula) {
 		this.botoesCelula = botoesCelula;
-	}
-
-	public Jogador getJogador() {
-		return jogador;
-	}
-
-	public void setJogador(Jogador jogador) {
-		this.jogador = jogador;
-	}
-
-	public int getQuantJogadas() {
-		return quantJogadas;
-	}
-
-	public void setQuantJogadas() {
-		this.quantJogadas++;
 	}
 
 	public boolean verificaRoboSelecionado() {
@@ -303,6 +185,83 @@ public class PainelMenu extends Painel {
 
 	public void setRoboSelecionado(Robo roboSelecionado) {
 		this.roboSelecionado = roboSelecionado;
+	}
+
+	public void atualizaPainelTotal() {
+		setAlunosSalvos();
+		setBugsEncontrados();
+	}
+
+	public Painel getPainelTotal() {
+		Painel painelTotal = new Painel(getBackground(), getJanela());
+		painelTotal.setLayout(new GridLayout(1, 5));
+		painelTotal.add(new JLabel("Total: "));
+		painelTotal.add(new JLabel("", new Icon("src/img/aluno.png").getIcon30(), JLabel.CENTER));
+		String alunos = "" + getAlunosSalvos();
+		painelTotal.add(new JLabel(alunos));
+		painelTotal.add(new JLabel("", new Icon("src/img/bug.png").getIcon30(), JLabel.CENTER));
+		String bugs = "" + getBugsEncontrados();
+		painelTotal.add(new JLabel(bugs));
+		return painelTotal;
+	}
+
+	public void setPainelTotal(Painel painelTotal) {
+		this.painelTotal = painelTotal;
+	}
+
+	public Painel getPainelRobosPontuacao() {
+		Painel painelRobosPontuacao = new Painel(getBackground(), getJanela());
+		painelRobosPontuacao.setLayout(new GridLayout(1, partida.getRobos().size() * 2));
+		for (Robo robo : partida.getRobos()) {
+			painelRobosPontuacao.add(new JLabel("", robo.getIcon().getIcon30(), JLabel.CENTER));
+			String pontuacao = "" + robo.getPontuacao();
+			painelRobosPontuacao.add(new JLabel(pontuacao));
+		}
+		return painelRobosPontuacao;
+	}
+
+	public void setPainelRobosPontuacao(Painel painelRobosPontuacao) {
+		this.painelRobosPontuacao = painelRobosPontuacao;
+	}
+
+	public Partida getPartida() {
+		return partida;
+	}
+
+	public void setPartida(Partida partida) {
+		this.partida = partida;
+	}
+
+	public int getAlunosSalvos() {
+		return alunosSalvos;
+	}
+
+	public void setAlunosSalvos(int alunosSalvos) {
+		this.alunosSalvos = alunosSalvos;
+	}
+
+	public void setAlunosSalvos() {
+		this.alunosSalvos = partida.getAlunosSalvos();
+	}
+
+	public int getBugsEncontrados() {
+		return bugsEncontrados;
+	}
+
+	public void setBugsEncontrados(int bugsEncontrados) {
+		this.bugsEncontrados = bugsEncontrados;
+	}
+
+	public void setBugsEncontrados() {
+		this.bugsEncontrados = partida.getBugsEncontrados();
+	}
+	
+	public Painel getPainelPontuacao() {
+		return painelPontuacao;
+	}
+
+	public void setPainelPontuacao(Painel painelPontuacao) {
+		this.painelPontuacao = painelPontuacao;
 	}
 
 }

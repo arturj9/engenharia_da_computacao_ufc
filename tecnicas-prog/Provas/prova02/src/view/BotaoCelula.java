@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.event.ActionListener;
 
 import controller.Celula;
 
@@ -8,8 +9,8 @@ public class BotaoCelula extends Botao {
 	
 	private Celula celula;
 
-	public BotaoCelula(Color color, Celula celula) {
-		super("", color);
+	public BotaoCelula(Color color, Celula celula, ActionListener action) {
+		super("", color, action);
 		setCelula(celula);
 		atualizaIcon();
 	}
@@ -24,7 +25,7 @@ public class BotaoCelula extends Botao {
 	
 	public void atualizaIcon() {
 		if(celula.getIcon()!=null)
-			setIcon(celula.getIcon().getIcon(50, 50));
+			setIcon(celula.getIcon().getIcon50());
 		else
 			setIcon(null);
 	}

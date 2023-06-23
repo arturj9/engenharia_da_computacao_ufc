@@ -20,6 +20,11 @@ public class Robo extends Personagem{
 		this.setAlunosSalvos(new ArrayList<Aluno>());
 		this.setBugsEncontrados(new ArrayList<Bug>());
 	}
+	
+	public Robo(String nome, int pontuacao) {
+		super(nome);
+		setPontuacao(pontuacao);
+	}
 
 	public boolean verificarMovimento(Celula celula) {
 		if (!celula.verificaRobo())

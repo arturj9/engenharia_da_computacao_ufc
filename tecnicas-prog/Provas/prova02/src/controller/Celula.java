@@ -1,7 +1,5 @@
 package controller;
 
-import javax.swing.ImageIcon;
-
 public class Celula {
 
 	private int id;
@@ -21,8 +19,8 @@ public class Celula {
 		setRobo(null);
 		visitado = false;
 	}
-	
-	public Celula(int id, int x, int y,Robo robo) {
+
+	public Celula(int id, int x, int y, Robo robo) {
 		posicaoX = x;
 		posicaoY = y;
 		this.id = id;
@@ -31,7 +29,7 @@ public class Celula {
 		addRobo(robo);
 		visitado = true;
 	}
-	
+
 	public Celula(Robo robo) {
 		addRobo(robo);
 	}
@@ -73,7 +71,7 @@ public class Celula {
 			this.aluno = aluno;
 		}
 	}
-	
+
 	public Icon getIcon() {
 		if (verificaRobo())
 			return robo.getIcon();
@@ -83,18 +81,20 @@ public class Celula {
 			return bug.getIcon();
 		return null;
 	}
-	
-	public void calcularPontuacaoRobos(Jogador jogador) {
-		if (verificaRobo() && !visitado) {
+
+	public void calcularPontuacaoRobo(Partida partida) {
+		if (verificaRobo()) {
 			if (verificaAluno()) {
 				robo.setPontuacao(this.aluno.getPontos());
 				robo.addAlunoSalvo(aluno);
-				jogador.addPontuacao(aluno.getPontos());
+				partida.addPontuacao(aluno.getPontos());
+				partida.addAluno();
 				this.aluno.setEncontrado(true);
 			} else if (verificaBug()) {
 				robo.setPontuacao(this.bug.getPontos());
 				robo.addBugEncontrado(bug);
-				jogador.addPontuacao(bug.getPontos());
+				partida.addPontuacao(bug.getPontos());
+				partida.addBug();
 				this.bug.setEncontrado(true);
 			}
 		}
@@ -140,7 +140,6 @@ public class Celula {
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
 	}
-
 
 	public boolean isVisitado() {
 		return visitado;

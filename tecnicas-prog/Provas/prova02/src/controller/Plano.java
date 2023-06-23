@@ -67,8 +67,8 @@ public class Plano {
 
 	public void povoar() {
 		iniciarRobos();
-		iniciarAlunos(8);
-		iniciarBugs(12);
+		iniciarAlunos(21);
+		iniciarBugs(21);
 	}
 
 	public void iniciarRobos() {
@@ -104,6 +104,10 @@ public class Plano {
 		for (Robo robo:robos) {
 			retornarCelulaDeRobo(robo).retirarRobo();;
 		}
+	}
+	
+	public int getQuantCelula() {
+		return tamanhoX*tamanhoY;
 	}
 
 	public int getTamanhoX() {
