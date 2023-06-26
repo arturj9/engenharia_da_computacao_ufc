@@ -1,6 +1,7 @@
 package controller;
 
 public abstract class Personagem {
+
 	private Icon icon;
 	private String nome;
 
@@ -8,7 +9,7 @@ public abstract class Personagem {
 		this.setIcon(icon);
 		this.nome = nome;
 	}
-	
+
 	public Personagem(String nome) {
 		this.nome = nome;
 	}

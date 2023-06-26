@@ -7,10 +7,13 @@ import javax.swing.JOptionPane;
 
 import controller.Jogador;
 import controller.Partida;
+import view.Alerta;
 import view.JanelaPrincipal;
 import view.PainelInicial;
+import view.excecoes.CampoVazioException;
 
 public class Jogar implements ActionListener {
+
 	private JanelaPrincipal janela;
 
 	public Jogar(JanelaPrincipal janela) {
@@ -19,20 +22,18 @@ public class Jogar implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		PainelInicial painelInicial = janela.getPainelInicial();
-		if (!painelInicial.getNome().getText().equals("")) {
-			janela.getPainelTabuleiro().visivel();
-			janela.getPainelMenu().visivel();
-			painelInicial.nomeEstatico();
-			janela.getPainelMenu()
-					.setPartida(new Partida(new Jogador(painelInicial.getNome().getText()),
-							janela.getPainelTabuleiro().getPlano().getQuantCelula(),
-							janela.getPainelTabuleiro().getPlano().getRobos()));
-			painelInicial.getBotaoJogar().setEnabled(false);
-		} else {
-			JOptionPane.showMessageDialog(getJanela(), "Informe o nome do jogador", "Aviso",
-					JOptionPane.WARNING_MESSAGE);
+		try {
+			if (painelInicial.getNome().getText().equals(""))
+				throw new CampoVazioException("Informe o nome do jogador");
+			janela.paineisVisiveis();
+			janela.getPainelMenu().setPartida(new Partida(new Jogador(painelInicial.getNome().getText()),
+					janela.getPainelTabuleiro().getPlano().getRobos()));
+			painelInicial.getBotaoJogar().desabilitar();
+		} catch (CampoVazioException cv) {
+			new Alerta(janela, cv.getMessage());
+		} catch (Exception ed) {
+			new Alerta(janela, "Erro: " + ed.getMessage());
 		}
-
 	}
 
 	public JanelaPrincipal getJanela() {
@@ -42,4 +43,5 @@ public class Jogar implements ActionListener {
 	public void setJanela(JanelaPrincipal janela) {
 		this.janela = janela;
 	}
+
 }

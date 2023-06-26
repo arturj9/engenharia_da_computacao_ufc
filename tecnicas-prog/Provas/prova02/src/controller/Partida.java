@@ -11,23 +11,23 @@ public class Partida {
 	private int alunosSalvos;
 	private int bugsEncontrados;
 	private ArrayList<Robo> robos;
-	
-	public Partida(int celulaVazias, ArrayList<Robo> robos) {
-		setQuantJogadas(0);
+
+	public Partida(ArrayList<Robo> robos) {
+		setQuantJogadas(1);
 		setPontuacao(0);
 		setAlunosSalvos(0);
 		setBugsEncontrados(0);
-		setCelulaVazias(celulaVazias);
+		setCelulaVazias(0);
 		setRobos(robos);
 	}
 
-	public Partida(Jogador jogador, int celulaVazias, ArrayList<Robo> robos) {
+	public Partida(Jogador jogador, ArrayList<Robo> robos) {
 		setJogador(jogador);
-		setQuantJogadas(0);
+		setQuantJogadas(1);
 		setPontuacao(0);
 		setAlunosSalvos(0);
 		setBugsEncontrados(0);
-		setCelulaVazias(celulaVazias);
+		setCelulaVazias(0);
 		setRobos(robos);
 	}
 
@@ -86,8 +86,8 @@ public class Partida {
 		this.celulaVazias = celulaVazias;
 	}
 
-	public void retiraCelulaVazias() {
-		this.celulaVazias--;
+	public void addCelulaVazias() {
+		this.celulaVazias++;
 	}
 
 	public ArrayList<Robo> getRobos() {
@@ -117,4 +117,5 @@ public class Partida {
 	public void addPontuacao(int pontuacao) {
 		this.pontuacao += pontuacao;
 	}
+
 }

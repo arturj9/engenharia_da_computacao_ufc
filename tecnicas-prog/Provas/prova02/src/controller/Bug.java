@@ -4,8 +4,8 @@ public class Bug extends Personagem implements Pontuacao {
 
 	private boolean encontrado;
 
-	public Bug(String nome) {
-		super(new Icon("src/img/bug.png"), nome);
+	public Bug() {
+		super(new Icon("src/img/bug.png"), "Bug");
 		this.setEncontrado(false);
 	}
 
@@ -20,4 +20,5 @@ public class Bug extends Personagem implements Pontuacao {
 	public void setEncontrado(boolean encontrado) {
 		this.encontrado = encontrado;
 	}
+
 }

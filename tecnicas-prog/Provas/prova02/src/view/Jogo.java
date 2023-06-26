@@ -15,4 +15,5 @@ public class Jogo {
 	public void setJanela(JanelaPrincipal janela) {
 		this.janela = janela;
 	}
+
 }

@@ -17,17 +17,9 @@ public class Plano {
 		alunos = new ArrayList<Aluno>();
 		bugs = new ArrayList<Bug>();
 		robos = new ArrayList<Robo>();
-		int contador = 1;
-		for (int i = tamanhoX; i >= 1; i--) {
-			for (int j = 1; j <= tamanhoY; j++) {
-				Celula celula = new Celula(contador, i, j);
-				listaCelulas.add(celula);
-				contador++;
-			}
-		}
-
-		this.setTamanhoX(tamanhoX);
-		this.setTamanhoY(tamanhoY);
+		setTamanhoX(tamanhoX);
+		setTamanhoY(tamanhoY);
+		definirCelulas();
 		povoar();
 	}
 
@@ -41,10 +33,21 @@ public class Plano {
 
 	public Celula retornarCelulaDeRobo(Robo robo) {
 		for (Celula celula : listaCelulas) {
-			if (celula.getRobo()==robo)
+			if (celula.getRobo() == robo)
 				return celula;
 		}
 		return null;
+	}
+
+	public void definirCelulas() {
+		int contador = 1;
+		for (int i = tamanhoX; i >= 1; i--) {
+			for (int j = 1; j <= tamanhoY; j++) {
+				Celula celula = new Celula(contador, i, j);
+				listaCelulas.add(celula);
+				contador++;
+			}
+		}
 	}
 
 	public Celula sortearCelula() {
@@ -54,15 +57,9 @@ public class Plano {
 		Random random = new Random();
 		Celula celula = this.retornarCelula(random.nextInt((maxX - min + 1)) + min,
 				random.nextInt((maxY - min + 1)) + min);
-		if (verificaCelula(celula))
+		if (celula.verifica())
 			return celula;
 		return sortearCelula();
-	}
-
-	public boolean verificaCelula(Celula celula) {
-		if (celula.verificaRobo() || celula.verificaAluno() || celula.verificaBug())
-			return false;
-		return true;
 	}
 
 	public void povoar() {
@@ -72,42 +69,38 @@ public class Plano {
 	}
 
 	public void iniciarRobos() {
-		int contador = 1;
-		robos.add(new Robo(contador++, "Andador", this, new Icon("src/img/andador.png")));
-		robos.add(new Robo(contador++, "Cavalo", this, new Icon("src/img/cavalo.png")));
-		robos.add(new Robo(contador++, "Rei", this, new Icon("src/img/rei.png")));
+		FabricaRobos fabrica = new FabricaRobos(this);
+		robos.add(fabrica.criarRobo(Robos.ANDADOR));
+		robos.add(fabrica.criarRobo(Robos.CAVALO));
+		robos.add(fabrica.criarRobo(Robos.REI));
 	}
 
 	public void iniciarAlunos(int quant) {
-		Celula celula;
-		Aluno aluno;
 		for (int i = 1; i <= quant; i++) {
-			celula = this.sortearCelula();
-			aluno = new Aluno("Aluno " + i);
+			Celula celula = this.sortearCelula();
+			Aluno aluno = new Aluno();
 			celula.addAluno(aluno);
 			alunos.add(aluno);
 		}
 	}
 
 	public void iniciarBugs(int quant) {
-		Celula celula;
-		Bug bug;
 		for (int i = 1; i <= quant; i++) {
-			celula = this.sortearCelula();
-			bug = new Bug("Bug " + i);
+			Celula celula = this.sortearCelula();
+			Bug bug = new Bug();
 			celula.addBug(bug);
 			bugs.add(bug);
 		}
 	}
-	
+
 	public void retirarRobos() {
-		for (Robo robo:robos) {
-			retornarCelulaDeRobo(robo).retirarRobo();;
+		for (Robo robo : robos) {
+			retornarCelulaDeRobo(robo).retirarRobo();
 		}
 	}
-	
+
 	public int getQuantCelula() {
-		return tamanhoX*tamanhoY;
+		return tamanhoX * tamanhoY;
 	}
 
 	public int getTamanhoX() {
@@ -157,5 +150,5 @@ public class Plano {
 	public void setRobos(ArrayList<Robo> robos) {
 		this.robos = robos;
 	}
-	
+
 }

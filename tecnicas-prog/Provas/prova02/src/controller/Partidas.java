@@ -4,20 +4,22 @@ import java.util.ArrayList;
 
 import model.Escrever;
 import model.LerDados;
+import view.excecoes.EscreverDadosException;
+import view.excecoes.LerDadosException;
 
 public class Partidas {
 
 	private ArrayList<Partida> partidas;
 	private String caminho;
 
-	public Partidas() {
+	public Partidas() throws LerDadosException {
 		setCaminho("dados/Partidas.txt");
 		buscarDados();
 	}
 
-	public void addPartida(Partida partida) {
+	public void addPartida(Partida partida) throws LerDadosException, EscreverDadosException {
 		partidas.add(partida);
-		this.salvar();
+		salvar();
 	}
 
 	public int quantidadePartidas() {
@@ -38,15 +40,17 @@ public class Partidas {
 		return saida;
 	}
 
-	public void salvar() {
+	public void salvar() throws LerDadosException, EscreverDadosException {
 		Escrever escrever = new Escrever();
 		escrever.escerverDados(caminho, this.formatarDados());
 		buscarDados();
 	}
 
-	public void buscarDados() {
+	public void buscarDados() throws LerDadosException {
 		LerDados ler = new LerDados();
 		ler.lerDados(caminho);
+		if (ler.getPartidas() == null)
+			throw new LerDadosException("Não foi possível ler dados de arquivo");
 		setPartidas(ler.getPartidas());
 	}
 
@@ -65,4 +69,5 @@ public class Partidas {
 	public void setCaminho(String caminho) {
 		this.caminho = caminho;
 	}
+
 }

@@ -2,14 +2,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.border.BevelBorder;
-
 import controller.*;
 import view.eventos.Movimento;
 
@@ -20,15 +14,20 @@ public class PainelTabuleiro extends Painel {
 
 	public PainelTabuleiro(Color color, JanelaPrincipal janela) {
 		super(color, janela);
-		this.setPlano(new Plano(8, 8));
-		this.setLayout(new GridLayout(8, 8));
-		this.setBotoesCelulas(new ArrayList<BotaoCelula>());
+		int tamanhoPlano = 8;
+		setPlano(new Plano(tamanhoPlano, tamanhoPlano));
+		setLayout(new GridLayout(tamanhoPlano, tamanhoPlano));
+		setBotoesCelulas(new ArrayList<BotaoCelula>());
+		povoar();
+	}
+
+	public void povoar() {
 		int fator = 0;
 		int linha = plano.getTamanhoX();
 		for (Celula celula : plano.getListaCelulas()) {
 			if (plano.getTamanhoX() * plano.getTamanhoY() == celula.getId() - 1)
 				break;
-			BotaoCelula botaoCelula = new BotaoCelula(Color.white, celula, new Movimento(janela));
+			BotaoCelula botaoCelula = new BotaoCelula(Color.white, celula, new Movimento(getJanela()));
 			if (celula.getPosicaoX() != linha) {
 				linha--;
 				if (fator == 0)
@@ -39,13 +38,29 @@ public class PainelTabuleiro extends Painel {
 			if (celula.getId() % 2 != fator)
 				botaoCelula.setBackground(Color.cyan);
 			botaoCelula.setBorder(new BevelBorder(1, Color.cyan, Color.cyan));
-			this.add(botaoCelula);
+			add(botaoCelula);
 			botoesCelulas.add(botaoCelula);
 		}
 	}
 
-	public void povoar() {
+	public void atualizar() {
+		for (BotaoCelula botaoCelula : botoesCelulas) {
+			botaoCelula.atualizaIcon();
+		}
+	}
 
+	public void verificar() {
+		for (Celula celula : getPlano().getListaCelulas()) {
+			if (celula.verificaRobo()) {
+				celula.setVisitado();
+				celula.calcularPontuacao(getJanela().getPainelMenu().getPartida());
+				getJanela().getPainelTabuleiro().getBotoesCelulas().get(celula.getId() - 1)
+						.setBackground(new Color(200, 236, 249));
+				if (!celula.verificaAluno() && !celula.verificaBug())
+					getJanela().getPainelMenu().getPartida().addCelulaVazias();
+			}
+
+		}
 	}
 
 	public Plano getPlano() {
@@ -62,12 +77,6 @@ public class PainelTabuleiro extends Painel {
 
 	public void setBotoesCelulas(ArrayList<BotaoCelula> botoesCelulas) {
 		this.botoesCelulas = botoesCelulas;
-	}
-
-	public void atualizar() {
-		for (BotaoCelula botaoCelula : botoesCelulas) {
-			botaoCelula.atualizaIcon();
-		}
 	}
 
 }

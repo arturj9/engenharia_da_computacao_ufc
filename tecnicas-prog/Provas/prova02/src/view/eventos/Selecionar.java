@@ -8,6 +8,7 @@ import view.BotaoCelula;
 import view.JanelaPrincipal;
 
 public class Selecionar implements ActionListener {
+
 	private JanelaPrincipal janela;
 
 	public Selecionar(JanelaPrincipal janela) {
@@ -16,7 +17,7 @@ public class Selecionar implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		BotaoCelula botaoCelula = (BotaoCelula) e.getSource();
-		janela.getPainelMenu().botoesDefault();;
+		janela.getPainelMenu().botoesDefault();
 		if (janela.getPainelMenu().addRoboSelecionado(botaoCelula.getCelula().getRobo())) {
 			botaoCelula.setBackground(Color.white);
 		} else {
@@ -32,4 +33,5 @@ public class Selecionar implements ActionListener {
 	public void setJanela(JanelaPrincipal janela) {
 		this.janela = janela;
 	}
+
 }

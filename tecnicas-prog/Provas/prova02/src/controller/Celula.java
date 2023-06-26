@@ -34,6 +34,12 @@ public class Celula {
 		addRobo(robo);
 	}
 
+	public boolean verifica() {
+		if (verificaRobo() || verificaAluno() || verificaBug())
+			return false;
+		return true;
+	}
+
 	public boolean verificaAluno() {
 		if (aluno != null)
 			return true;
@@ -82,17 +88,15 @@ public class Celula {
 		return null;
 	}
 
-	public void calcularPontuacaoRobo(Partida partida) {
+	public void calcularPontuacao(Partida partida) {
 		if (verificaRobo()) {
 			if (verificaAluno()) {
 				robo.setPontuacao(this.aluno.getPontos());
-				robo.addAlunoSalvo(aluno);
 				partida.addPontuacao(aluno.getPontos());
 				partida.addAluno();
 				this.aluno.setEncontrado(true);
 			} else if (verificaBug()) {
 				robo.setPontuacao(this.bug.getPontos());
-				robo.addBugEncontrado(bug);
 				partida.addPontuacao(bug.getPontos());
 				partida.addBug();
 				this.bug.setEncontrado(true);
@@ -156,4 +160,5 @@ public class Celula {
 	public void setRobo(Robo robo) {
 		this.robo = robo;
 	}
+
 }

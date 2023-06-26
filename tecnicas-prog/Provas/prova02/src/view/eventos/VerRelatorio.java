@@ -3,10 +3,13 @@ package view.eventos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import view.Alerta;
 import view.JanelaPrincipal;
 import view.JanelaRelatorio;
+import view.excecoes.LerDadosException;
 
 public class VerRelatorio implements ActionListener {
+
 	private JanelaPrincipal janela;
 
 	public VerRelatorio(JanelaPrincipal janela) {
@@ -14,7 +17,13 @@ public class VerRelatorio implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		JanelaRelatorio relatorio = new JanelaRelatorio();
+		try {
+			JanelaRelatorio relatorio = new JanelaRelatorio();
+		} catch (LerDadosException ed) {
+			new Alerta(janela, ed.getMessage());
+		} catch (Exception ed) {
+			new Alerta(janela, "Erro: " + ed.getMessage());
+		}
 	}
 
 	public JanelaPrincipal getJanela() {
@@ -24,4 +33,5 @@ public class VerRelatorio implements ActionListener {
 	public void setJanela(JanelaPrincipal janela) {
 		this.janela = janela;
 	}
+
 }

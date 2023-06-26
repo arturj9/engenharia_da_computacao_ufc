@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 public class Painel extends JPanel {
+
 	private JanelaPrincipal janela;
 
 	public Painel(Color color, JanelaPrincipal janela) {
@@ -27,5 +28,5 @@ public class Painel extends JPanel {
 	public void setJanela(JanelaPrincipal janela) {
 		this.janela = janela;
 	}
-	
+
 }

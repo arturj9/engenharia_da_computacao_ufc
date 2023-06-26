@@ -1,17 +1,16 @@
 package view.eventos;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import controller.Celula;
+import view.Alerta;
 import view.JanelaPrincipal;
 import view.PainelMenu;
+import view.excecoes.OpcaoInvalidaException;
 
 public class Verificar implements ActionListener {
+
 	private JanelaPrincipal janela;
 
 	public Verificar(JanelaPrincipal janela) {
@@ -19,32 +18,24 @@ public class Verificar implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		PainelMenu painelMenu = janela.getPainelMenu(); 
-		if (painelMenu.verificaRobos()) {
-			for (Celula celula : janela.getPainelTabuleiro().getPlano().getListaCelulas()) {
-				if (celula.verificaRobo()) {
-					painelMenu.getPartida().retiraCelulaVazias();
-					celula.setVisitado();
-					celula.calcularPontuacaoRobo(painelMenu.getPartida());
-					janela.getPainelTabuleiro().getBotoesCelulas().get(celula.getId() - 1)
-							.setBackground(new Color(200, 236, 249));
-				}
+		PainelMenu painelMenu = janela.getPainelMenu();
+		try {
+			if (painelMenu.isVerificado())
+				throw new OpcaoInvalidaException("Avance para a próxima jogada");
+			if (painelMenu.umRoboEstaDefault())
+				throw new OpcaoInvalidaException("Posicione todos os robôs");
 
-			}
-			painelMenu.atualizaPontuacao();
-			painelMenu.atualizaPainelTotal();
-			painelMenu.getPainelPontuacao().removeAll();
-			painelMenu.getPainelPontuacao().add(painelMenu.getLabelPontuacao());
-			painelMenu.getPainelPontuacao().add(new JLabel());
-			painelMenu.getPainelPontuacao().add(painelMenu.getPainelTotal());
-			painelMenu.getPainelPontuacao().add(new JLabel());
-			painelMenu.getPainelPontuacao().add(painelMenu.getPainelRobosPontuacao());
+			janela.getPainelTabuleiro().verificar();
 			painelMenu.robosDefault();
 			painelMenu.atualizar();
+			painelMenu.setVerificado(true);
+			janela.getPainelMenu().retiraRoboSelecionado();
 			janela.getPainelTabuleiro().atualizar();
-		} else
-			JOptionPane.showMessageDialog(getJanela(), "Posicione todos os robos", "Aviso",
-					JOptionPane.WARNING_MESSAGE);
+		} catch (OpcaoInvalidaException oi) {
+			new Alerta(getJanela(), oi.getMessage());
+		} catch (Exception ed) {
+			new Alerta(janela, "Erro: " + ed.getMessage());
+		}
 
 	}
 
@@ -55,4 +46,5 @@ public class Verificar implements ActionListener {
 	public void setJanela(JanelaPrincipal janela) {
 		this.janela = janela;
 	}
+
 }

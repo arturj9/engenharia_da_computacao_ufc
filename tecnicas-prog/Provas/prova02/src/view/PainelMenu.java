@@ -1,32 +1,24 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Label;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import controller.Celula;
-import controller.Jogador;
 import controller.Partida;
-import controller.Plano;
 import controller.Robo;
 import view.eventos.ProximaJogada;
 import view.eventos.SairDoJogo;
 import view.eventos.Selecionar;
 import view.eventos.Verificar;
 import controller.Icon;
-import controller.Partidas;
 
 public class PainelMenu extends Painel {
 
+	Dimension dimension = new Dimension(290, 50);
+	Dimension dRobo = new Dimension(96, 70);
+	Color corBotao = new Color(134, 193, 239);
 	private Partida partida;
 	private ArrayList<BotaoCelula> botoesCelula;
 	private Robo roboSelecionado;
@@ -37,64 +29,70 @@ public class PainelMenu extends Painel {
 	private int pontuacao;
 	private int alunosSalvos;
 	private int bugsEncontrados;
+	private boolean verificado;
 
 	public PainelMenu(Color color, JanelaPrincipal janela, Partida partida) {
 		super(color, janela);
-		setPartida(partida);
+		setInicial(partida);
+		configurarPainelPontuacao(color);
+		Painel painelRobos = configurarPainelRobos(color);
+		Painel painelBotoes = configurarPainelBotoes(color);
+		add(painelPontuacao);
+		add(painelRobos);
+		add(painelBotoes);
+	}
 
+	public void setInicial(Partida partida) {
+		setPartida(partida);
 		setBotoesCelula(new ArrayList<BotaoCelula>());
-		partida.setRobos(janela.getPainelTabuleiro().getPlano().getRobos());
+		partida.setRobos(getJanela().getPainelTabuleiro().getPlano().getRobos());
 		setPontuacao(0);
 		setAlunosSalvos(0);
 		setBugsEncontrados(0);
+		setPreferredSize(new Dimension(300, 700));
+	}
 
-		this.setPreferredSize(new Dimension(300, 700));
-
-		Dimension dimension = new Dimension(290, 50);
-		Dimension dRobo = new Dimension(96, 70);
-		Color corBotao = new Color(134, 193, 239);
-
-		painelPontuacao = new Painel(color, janela);
+	public void configurarPainelPontuacao(Color color) {
+		painelPontuacao = new Painel(color, getJanela());
 		painelPontuacao.setLayout(new GridLayout(6, 1));
 		painelTotal = getPainelTotal();
-
 		labelPontuacao = getLabelPontuacao();
-
 		painelPontuacao.add(labelPontuacao);
 		painelPontuacao.add(new JLabel());
 		painelPontuacao.add(painelTotal);
 		painelPontuacao.add(new JLabel());
 		setPainelRobosPontuacao(getPainelRobosPontuacao());
 		painelPontuacao.add(painelRobosPontuacao);
+	}
 
-		Painel painelRobos = new Painel(color, janela);
-		ArrayList<Celula> celulas = janela.getPainelTabuleiro().getPlano().getListaCelulas();
+	public Painel configurarPainelRobos(Color color) {
+		Painel painelRobos = new Painel(color, getJanela());
+		ArrayList<Celula> celulas = getJanela().getPainelTabuleiro().getPlano().getListaCelulas();
 		painelRobos.setLayout(new GridLayout(1, 3));
 		for (Robo robo : partida.getRobos()) {
 			Celula celula = new Celula(robo);
 			celulas.add(celula);
-			BotaoCelula botaoCelula = new BotaoCelula(Color.cyan, celula,new Selecionar(janela));
+			BotaoCelula botaoCelula = new BotaoCelula(Color.cyan, celula, new Selecionar(getJanela()));
 			botaoCelula.setPreferredSize(dRobo);
 			botoesCelula.add(botaoCelula);
 			painelRobos.add(botaoCelula);
 		}
+		return painelRobos;
+	}
 
-		Painel painelBotoes = new Painel(color, janela);
+	public Painel configurarPainelBotoes(Color color) {
+		Painel painelBotoes = new Painel(color, getJanela());
 		painelBotoes.setLayout(new GridLayout(3, 1));
-		Botao botaoVerificar = new Botao("Verificar", corBotao, new Verificar(janela));
+		Botao botaoVerificar = new Botao("Verificar", corBotao, new Verificar(getJanela()));
 		botaoVerificar.setPreferredSize(dimension);
-		Botao botaoProximaJogada = new Botao("Proxima Jogada", corBotao, new ProximaJogada(janela));
+		Botao botaoProximaJogada = new Botao("Proxima Jogada", corBotao, new ProximaJogada(getJanela()));
 		botaoProximaJogada.setPreferredSize(dimension);
-		Botao botaoSairDoJogo = new Botao("Sair do Jogo", corBotao, new SairDoJogo(janela));
+		Botao botaoSairDoJogo = new Botao("Sair do Jogo", corBotao, new SairDoJogo(getJanela()));
 		botaoSairDoJogo.setPreferredSize(dimension);
 		painelBotoes.add(botaoVerificar);
 		painelBotoes.add(botaoProximaJogada);
 		painelBotoes.add(botaoSairDoJogo);
-
-		this.add(painelPontuacao);
-		this.add(painelRobos);
-		this.add(painelBotoes);
-
+		return painelBotoes;
 	}
 
 	public boolean verificaRobos() {
@@ -103,6 +101,22 @@ public class PainelMenu extends Painel {
 				return false;
 		}
 		return true;
+	}
+
+	public boolean robosEstaoDefault() {
+		for (BotaoCelula botaoCelula : botoesCelula) {
+			if (!botaoCelula.getCelula().verificaRobo())
+				return false;
+		}
+		return true;
+	}
+
+	public boolean umRoboEstaDefault() {
+		for (BotaoCelula botaoCelula : botoesCelula) {
+			if (botaoCelula.getCelula().verificaRobo())
+				return true;
+		}
+		return false;
 	}
 
 	public void botoesDefault() {
@@ -120,11 +134,24 @@ public class PainelMenu extends Painel {
 	}
 
 	public void atualizar() {
+		atualizarPainelPontuacao();
 		for (BotaoCelula botaoCelula : botoesCelula) {
 			if (!botaoCelula.getCelula().verificaRobo())
 				botaoCelula.setEnabled(false);
 			botaoCelula.atualizaIcon();
 		}
+	}
+
+	public void atualizarPainelPontuacao() {
+		setAlunosSalvos();
+		setBugsEncontrados();
+		setPontuacao();
+		painelPontuacao.removeAll();
+		painelPontuacao.add(getLabelPontuacao());
+		painelPontuacao.add(new JLabel());
+		painelPontuacao.add(getPainelTotal());
+		painelPontuacao.add(new JLabel());
+		painelPontuacao.add(getPainelRobosPontuacao());
 	}
 
 	public JLabel getLabelPontuacao() {
@@ -134,10 +161,6 @@ public class PainelMenu extends Painel {
 
 	public void setLabelPontuacao(JLabel labelPontuacao) {
 		this.labelPontuacao = labelPontuacao;
-	}
-
-	public void atualizaPontuacao() {
-		setPontuacao();
 	}
 
 	public int getPontuacao() {
@@ -185,11 +208,6 @@ public class PainelMenu extends Painel {
 
 	public void setRoboSelecionado(Robo roboSelecionado) {
 		this.roboSelecionado = roboSelecionado;
-	}
-
-	public void atualizaPainelTotal() {
-		setAlunosSalvos();
-		setBugsEncontrados();
 	}
 
 	public Painel getPainelTotal() {
@@ -255,13 +273,21 @@ public class PainelMenu extends Painel {
 	public void setBugsEncontrados() {
 		this.bugsEncontrados = partida.getBugsEncontrados();
 	}
-	
+
 	public Painel getPainelPontuacao() {
 		return painelPontuacao;
 	}
 
 	public void setPainelPontuacao(Painel painelPontuacao) {
 		this.painelPontuacao = painelPontuacao;
+	}
+
+	public boolean isVerificado() {
+		return verificado;
+	}
+
+	public void setVerificado(boolean verificado) {
+		this.verificado = verificado;
 	}
 
 }

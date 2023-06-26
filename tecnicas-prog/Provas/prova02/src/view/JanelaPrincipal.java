@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import controller.Partida;
 
 public class JanelaPrincipal extends Janela {
+
 	private PainelInicial painelInicial;
 	private PainelTabuleiro painelTabuleiro;
 	private PainelMenu painelMenu;
@@ -16,21 +17,25 @@ public class JanelaPrincipal extends Janela {
 		super("O Regaste dos Alunos na Ilha de Java");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		configurarPaineis();
-		
-
 		setVisible(true);
 	}
 
+	public void paineisVisiveis() {
+		getPainelTabuleiro().visivel();
+		getPainelMenu().visivel();
+		painelInicial.nomeEstatico();
+	}
+
 	public void configurarPaineis() {
-		this.setPainelInicial(new PainelInicial(new Color(200, 236, 249), this));
-		this.add(painelInicial, BorderLayout.NORTH);
-		this.setPainelTabuleiro(new PainelTabuleiro(new Color(200, 236, 249), this));
+		setPainelInicial(new PainelInicial(new Color(200, 236, 249), this));
+		add(painelInicial, BorderLayout.NORTH);
+		setPainelTabuleiro(new PainelTabuleiro(new Color(200, 236, 249), this));
 		painelTabuleiro.naoVisivel();
-		this.add(painelTabuleiro, BorderLayout.CENTER);
-		this.setPainelMenu(new PainelMenu(new Color(200, 236, 249), this,
-				new Partida(painelTabuleiro.getPlano().getQuantCelula(), painelTabuleiro.getPlano().getRobos())));
+		add(painelTabuleiro, BorderLayout.CENTER);
+		setPainelMenu(
+				new PainelMenu(new Color(200, 236, 249), this, new Partida(painelTabuleiro.getPlano().getRobos())));
 		painelMenu.naoVisivel();
-		this.add(painelMenu, BorderLayout.EAST);
+		add(painelMenu, BorderLayout.EAST);
 	}
 
 	public PainelInicial getPainelInicial() {
