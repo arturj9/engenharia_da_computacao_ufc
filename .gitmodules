@@ -1,0 +1,3 @@
+[submodule "tecnicas-prog/tecnicas-prog/Provas/prova03/jogo_de_cartas"]
+	path = tecnicas-prog/tecnicas-prog/Provas/prova03/jogo_de_cartas
+	url = git@github.com:arturj9/jogo_de_cartas.git
