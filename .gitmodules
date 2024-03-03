@@ -1,3 +1,6 @@
 [submodule "tecnicas-prog/tecnicas-prog/Provas/prova03/jogo_de_cartas"]
 	path = tecnicas-prog/tecnicas-prog/Provas/prova03/jogo_de_cartas
 	url = git@github.com:arturj9/jogo_de_cartas.git
+[submodule "paradigmas/analisador_c"]
+	path = paradigmas/analisador_c
+	url = git@github.com:arturj9/analisador_c.git
