@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include "lista.h"
 
+// Estrutura
 struct lista
 {
 	int info;
 	Lista *prox;
 };
 
+// Funções da Questão
 int comprimento(Lista *l)
 {
 	int quantNos = 0;
@@ -53,7 +55,7 @@ int primos(Lista *l)
 	Lista *aux = l;
 	while (aux != NULL)
 	{
-		if (ehPrimo(aux->info))
+		if (eh_primo(aux->info))
 		{
 			quant++;
 		}
@@ -64,8 +66,8 @@ int primos(Lista *l)
 
 Lista *lst_conc(Lista *l1, Lista *l2)
 {
-	Lista *copiaL1 = copiarLista(l1);
-	Lista *copiaL2 = copiarLista(l2);
+	Lista *copiaL1 = lst_copia(l1);
+	Lista *copiaL2 = lst_copia(l2);
 	Lista *aux = copiaL1;
 
 	while (aux->prox != NULL)
@@ -78,8 +80,8 @@ Lista *lst_conc(Lista *l1, Lista *l2)
 
 Lista *lst_diferenca(Lista *l1, Lista *l2)
 {
-	Lista *copiaL1 = copiarLista(l1);
-	Lista *copiaL2 = copiarLista(l2);
+	Lista *copiaL1 = lst_copia(l1);
+	Lista *copiaL2 = lst_copia(l2);
 	Lista *aux = l1;
 
 	while (aux != NULL)
@@ -100,6 +102,7 @@ Lista *lst_diferenca(Lista *l1, Lista *l2)
 	return copiaL1;
 };
 
+// Funções Fundamentais
 Lista *lst_cria()
 {
 	return NULL;
@@ -132,7 +135,8 @@ Lista *lst_insere(Lista *l, int info)
 	}
 };
 
-int lst_vazia(Lista* l){
+int lst_vazia(Lista *l)
+{
 	return l == NULL;
 }
 
@@ -184,8 +188,8 @@ void lst_libera(Lista *l)
 	}
 }
 
-// Funções auxiliares
-int ehPrimo(int numero)
+// Funções Auxiliares
+int eh_primo(int numero)
 {
 	if (numero <= 1)
 	{
@@ -201,7 +205,7 @@ int ehPrimo(int numero)
 	return 1;
 };
 
-Lista *copiarLista(Lista *l)
+Lista *lst_copia(Lista *l)
 {
 	Lista *aux = l;
 	Lista *copia = lst_cria();
