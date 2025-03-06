@@ -1,0 +1,53 @@
+body {
+    font-family: Lato, sans-serif; 
+    background-color: #DCF2F1;
+    color: #0F1035;
+    margin: 0;
+    padding: 20px;
+}
+
+#nome-site {
+    text-align: center;
+    color: #365486;
+    margin-bottom: 20px;
+}
+
+#menu {
+    background-color: #7FC7D9;
+    padding: 10px;
+    text-align: right;
+}
+
+#menu a {
+    color: #0F1035;
+    font-weight: bold;
+}
+
+.titulo {
+    color: #365486;
+    margin-top: 20px;
+    font-size: 1.8em;
+}
+
+.conteudo {
+    margin: 10px 0;
+    color: #0F1035;
+}
+
+.imagem {
+    margin: 10px auto;
+    max-width: 100%;
+    height: auto;
+}
+
+.link {
+    color: #365486;
+}
+
+#copyright {
+    text-align: center;
+    font-size: 0.9em;
+    color: #365486;
+    margin-top: 20px;
+}
+

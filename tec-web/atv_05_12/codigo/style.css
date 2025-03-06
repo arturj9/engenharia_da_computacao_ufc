@@ -1,0 +1,71 @@
+body{
+    height: 200vh;
+    background-color: #FFCB8E;
+    margin: 0;
+}
+
+#titulo .texto{
+    left: 37%;
+    top: 0px;
+    margin-top:5px;
+    font-size: 40px;
+    position: fixed;
+    color: #931A25;
+    border: 2px dashed #E97171;
+    border-radius: 10px;
+}
+
+#menu{
+    position:absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+}
+
+#menu .menu-item{
+    margin: 10px;
+    color: #E97171;
+    text-decoration: none;
+}
+
+#galeria{
+    padding-top: 20px;
+    padding: 20px;
+    margin-bottom: 150px;
+}
+
+#galeria .foto{
+    width: 30%;
+    margin: 10% 0;
+}
+
+#galeria .foto img{
+    width: 300px;
+}
+
+#galeria #foto-destaque{
+    position: relative;
+    left: 200px;
+}
+
+#botao-topo{
+    position: fixed;
+    bottom: 25px;
+    right: 10px;
+}
+
+#botao-topo img{
+    height: 50px;
+}
+
+#legenda {
+    position: sticky;
+    bottom: 0;
+    padding:1px;
+    background-color: #FFF8E1;
+    text-align: center;
+    font-weight: bold;
+    color: #931A25;
+    border-top: 2px dashed #E97171;
+}
+

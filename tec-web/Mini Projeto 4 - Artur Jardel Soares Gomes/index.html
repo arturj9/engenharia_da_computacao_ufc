@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartão</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <section class="form-section">
+            <form id="businessCardForm">
+                <h2>Crie seu Cartão</h2>
+
+                <div class="elementForm">
+                    <label for="name">Nome<span class="obrigatorio">*</span></label>
+                    <div class="elementInput">
+                        <input type="text" id="name" class="inputText" placeholder="Digite seu nome:">
+                        <input type="color" id="nameColor" class="inputColor" value="#000000">
+                        <label>
+                            <input type="checkbox" id="nameBold"> Negrito
+                        </label>
+                    </div>
+                    <p class="msg"></p>
+                </div>
+
+                <div class="elementForm">
+                    <label for="profession">Profissão/Cargo<span class="obrigatorio">*</span></label>
+                    <div class="elementInput">
+                        <input type="text" id="profession" class="inputText" placeholder="Profissão/Cargo">
+                        <input type="color" id="professionColor" class="inputColor" value="#000000">
+                        <label>
+                            <input type="checkbox" id="professionBold"> Negrito
+                        </label>
+                    </div>
+                    <p class="msg"></p>
+                </div>
+
+                <div class="elementForm">
+                    <label for="email">E-mail</label>
+                    <div class="elementInput">
+                        <input type="email" id="email" class="inputText" placeholder="E-mail">
+                        <input type="color" id="emailColor" class="inputColor" value="#000000">
+                        <label>
+                            <input type="checkbox" id="emailBold"> Negrito
+                        </label>
+                    </div>
+                </div>
+
+                <div class="elementForm">
+                    <label for="phone">Telefone</label>
+                    <div class="elementInput">
+                        <input type="tel" id="phone" class="inputText" placeholder="Telefone">
+                        <input type="color" id="phoneColor" class="inputColor" value="#000000">
+                        <label>
+                            <input type="checkbox" id="phoneBold"> Negrito
+                        </label>
+                    </div>
+                </div>
+
+                <div class="elementForm">
+                    <label for="cardColor">Cor do Cartão</label>
+                    <div class="elementInput">
+                        <input type="color" id="cardColor" class="inputColor" value="#b8b4b4">
+                    </div>
+                </div>
+
+                <div class="elementForm">
+                    <label for="logo">Logotipo</label>
+                    <div class="elementInput">
+                        <input type="file" id="logo" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="areaButton">
+                    <button type="button" id="resetBtn">Limpar</button>
+                    <button type="submit" id="submitBtn">Gerar</button>
+                </div>
+
+                <a id="download"></a>
+            </form>
+        </section>
+
+        <section class="preview-section">
+            <div class="card" id="cardPreview">
+                <img id="previewLogo" src="" alt="Pré-visualização do Logotipo" style="display: none; width: 100px; height: auto; margin-bottom: 10px;">
+                <h1 id="previewName">Seu Nome</h1>
+                <h2 id="previewProfession">Sua Profissão</h2>
+                <p id="previewEmail"></p>
+                <p id="previewPhone"></p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="html2canvas.min.js"></script>
+</body>
+
+</html>

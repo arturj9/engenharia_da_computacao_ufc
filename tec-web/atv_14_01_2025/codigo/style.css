@@ -1,0 +1,102 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FCF2D7;
+    color: #343844;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #343844;
+}
+
+.areaInput {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.areaInput input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.areaInput button {
+    margin-left: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #2AB69D;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.areaInput button:hover {
+    background-color: #218c74;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.presencaBotao {
+    padding: 5px 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.presencaBotao:hover {
+    background-color: #218838;
+}
+
+#areaMsg {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border: 1px solid #d4edda;
+    border-radius: 4px;
+    background-color: #E65848;
+    color: #e9f7df;
+    padding: 10px;
+    font-size: 14px;
+    max-width: 300px;
+    word-wrap: break-word;
+    display: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#areaMsg.show {
+    display: block;
+    opacity: 1;
+}
+
+#areaMsg.hide {
+    opacity: 0;
+}

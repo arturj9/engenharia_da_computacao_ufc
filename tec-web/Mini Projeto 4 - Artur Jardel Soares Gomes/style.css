@@ -1,0 +1,150 @@
+/* Estilo Global */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+}
+
+input,
+button {
+    transition: all 0.3s ease;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.form-section,
+.preview-section {
+    flex: 1;
+    padding: 20px;
+}
+
+.form-section {
+    background-color: #dfdddd;
+}
+
+.preview-section {
+    background-color: #a971f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.elementForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.elementInput {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+label {
+    margin: 1% 0;
+}
+
+.obrigatorio{
+    color: red;
+    font-size: 16px;
+}
+
+.msg{
+    color: red;
+    font-size: 10px;
+    display: none;
+}
+
+.inputText {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 70%;
+}
+
+.inputText:focus {
+    border-color: #6f00ff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(111, 0, 255, 0.5);
+}
+
+.inputColor {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.inputColor::-webkit-color-swatch,
+.inputColor::-moz-color-swatch {
+    border-radius: 15px;
+    border: none;
+}
+
+.inputColor:hover {
+    box-shadow: 0 0 5px rgba(111, 0, 255, 0.5);
+}
+
+button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #6f00ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #4601a0;
+}
+
+.areaButton {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: right;
+    gap: 2%;
+}
+
+.card {
+    min-width: 400px;
+    min-height: 250px;
+    background-color: #b8b4b4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.card h1,
+.card h2 {
+    margin: 5px 0;
+    font-weight: normal;
+}
+
+h2{
+    margin: 0;
+}
